@@ -1,0 +1,38 @@
+# Main Menu
+[[main]]
+  name = "About"
+  pageRef = "about"
+  weight = 10
+
+[[main]]
+  name = "Experience"
+  pageRef = "experience"
+  weight = 20
+
+[[main]]
+  name = "Projects"
+  pageRef = "projects"
+  weight = 30
+
+[[main]]
+  name = "CV"
+  pageRef = "cv"
+  weight = 40
+
+[[main]]
+  identifier = "github"
+  pre = "github"
+  url = "https://github.com/Amineelfarssi"
+  weight = 100
+
+[[main]]
+  identifier = "linkedin"
+  pre = "linkedin"
+  url = "https://www.linkedin.com/in/amine-el-farssi/"
+  weight = 110
+
+# Footer Menu
+[[footer]]
+  name = "Contact"
+  url = "mailto:your.email@example.com"
+  weight = 10
