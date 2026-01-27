@@ -10,5 +10,5 @@ cascade:
 ---
 
 {{< lead >}}
-4+ years of experience building production AI systems, from AML detection to enterprise AI agents.
+5 years of experience building production AI systems, from AML detection to enterprise AI agents.
 {{< /lead >}}

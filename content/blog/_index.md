@@ -3,7 +3,7 @@ title: "Blog"
 description: "Thoughts on AI, Data Science, and Engineering"
 cascade:
   showDate: true
-  showAuthor: true
+  showAuthor: false
   showReadingTime: true
   showWordCount: false
   showTableOfContents: true
