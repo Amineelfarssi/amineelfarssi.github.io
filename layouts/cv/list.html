@@ -1,0 +1,459 @@
+{{ define "main" }}
+  {{ .Scratch.Set "scope" "list" }}
+  {{ $enableToc := .Params.showTableOfContents | default (site.Params.list.showTableOfContents | default false) }}
+  {{ $showToc := and $enableToc (in .TableOfContents "<ul") }}
+
+  {{/* Hero */}}
+  {{ if site.Params.list.showHero | default false }}
+    {{ $heroStyle := print "hero/" site.Params.list.heroStyle ".html" }}
+    {{ if templates.Exists ( printf "partials/%s" $heroStyle ) }}
+      {{ partial $heroStyle . }}
+    {{ else }}
+      {{ partial "hero/basic.html" . }}
+    {{ end }}
+  {{ end }}
+
+  {{/* Header */}}
+  <header id="cv-page-header">
+    {{ if .Params.showBreadcrumbs | default (site.Params.list.showBreadcrumbs | default false) }}
+      {{ partial "breadcrumbs.html" . }}
+    {{ end }}
+    <h1 class="mt-5 text-4xl font-extrabold text-neutral-900 dark:text-neutral">{{ .Title }}</h1>
+    <div class="mt-1 mb-2 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+      {{ partial "article-meta/list.html" (dict "context" . "scope" "single") }}
+    </div>
+    {{ $translations := .AllTranslations }}
+    {{ with .File }}
+      {{ $path := .Path }}
+      {{ range $translations }}
+        {{ $lang := print "."  .Lang  ".md" }}
+        {{ $path = replace $path $lang ".md" }}
+      {{ end }}
+      {{ $jsPage := resources.Get "js/page.js" }}
+      {{ $jsPage = $jsPage | resources.Minify | resources.Fingerprint (site.Params.fingerprintAlgorithm | default "sha512") }}
+      <script
+        type="text/javascript"
+        src="{{ $jsPage.RelPermalink }}"
+        integrity="{{ $jsPage.Data.Integrity }}"
+        data-oid="views_{{ $path }}"
+        data-oid-likes="likes_{{ $path }}"></script>
+    {{ end }}
+  </header>
+
+  {{/* Description (markdown content) */}}
+  {{ $tocMargin := cond $showToc "mt-12" "mt-0" }}
+  {{ $topClass := cond (hasPrefix site.Params.header.layout "fixed") "lg:top-[140px]" "lg:top-10" }}
+  <section id="cv-layout" class="{{ $tocMargin }} prose flex max-w-full flex-col dark:prose-invert lg:flex-row">
+    {{ if $showToc }}
+      <div class="order-first px-0 lg:order-last lg:max-w-xs lg:ps-8">
+        <div id="cv-toc" class="toc ps-5 lg:sticky {{ $topClass }}">
+          {{ partial "toc.html" . }}
+        </div>
+      </div>
+    {{ end }}
+
+    <div class="cv-content min-w-0 min-h-0 max-w-prose w-full pb-20">
+      <div id="cv-human">
+        {{ .Content }}
+      </div>
+
+      <div id="cv-machine" class="hidden not-prose">
+        <p class="mb-3 text-sm text-neutral-600 dark:text-neutral-300">
+          Machine-readable CV (Markdown). Source: <a class="text-primary-600 hover:underline dark:text-primary-400" href="/cv.md">/cv.md</a>
+        </p>
+        <pre class="overflow-x-auto rounded-lg border border-neutral-200 bg-neutral-50 p-4 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100"><code id="cv-md-code"></code></pre>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    /* CV-only terminal mode (animated) */
+    body.cv-terminal-mode {
+      background-color: #050607 !important;
+      transition: background-color 420ms ease;
+    }
+
+    /* Hide normal page chrome in terminal mode */
+    body.cv-terminal-mode {
+      max-width: none !important;
+      margin: 0 !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+
+    /* Hide theme navigation, hero background, footer */
+    body.cv-terminal-mode #the-top {
+      display: none !important;
+    }
+    body.cv-terminal-mode .fixed.inset-x-0.z-100 {
+      display: none !important; /* top navigation bar wrapper */
+    }
+    body.cv-terminal-mode #hero,
+    body.cv-terminal-mode #background-blur,
+    body.cv-terminal-mode #background-image,
+    body.cv-terminal-mode #menu-blur,
+    body.cv-terminal-mode .single_hero_background {
+      display: none !important;
+    }
+    body.cv-terminal-mode #site-footer {
+      display: none !important;
+    }
+
+    body.cv-terminal-mode #cv-page-header {
+      display: none !important;
+    }
+    body.cv-terminal-mode #cv-toc {
+      display: none !important;
+    }
+
+    body.cv-terminal-mode header h1,
+    body.cv-terminal-mode header div,
+    body.cv-terminal-mode header a {
+      color: #b7f7c2 !important;
+    }
+
+    body.cv-terminal-mode .prose {
+      color: #b7f7c2 !important;
+    }
+
+    body.cv-terminal-mode .toc {
+      opacity: 0.15;
+      filter: grayscale(1);
+      transition: opacity 420ms ease, filter 420ms ease;
+    }
+
+    /* Make machine view full-viewport */
+    body.cv-terminal-mode #cv-layout {
+      margin-top: 0 !important;
+    }
+    body.cv-terminal-mode #main-content {
+      width: 100% !important;
+      padding: 0 !important;
+    }
+    body.cv-terminal-mode .cv-content {
+      max-width: none !important;
+      width: 100% !important;
+      padding: 0 !important;
+      padding-bottom: 5rem !important; /* leave room for floating toggle */
+    }
+    body.cv-terminal-mode #cv-machine {
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+      padding: 1.25rem clamp(1rem, 4vw, 3rem) 0;
+    }
+    body.cv-terminal-mode #cv-machine p {
+      display: none;
+    }
+
+    body.cv-terminal-mode #cv-machine pre {
+      background: #050607 !important;
+      border-color: rgba(183, 247, 194, 0.25) !important;
+      color: #b7f7c2 !important;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      box-shadow: 0 0 0 1px rgba(183, 247, 194, 0.08), 0 12px 40px rgba(0, 0, 0, 0.35);
+      position: relative;
+      overflow: hidden;
+      transition: background-color 420ms ease, border-color 420ms ease, box-shadow 420ms ease;
+      width: 100%;
+      min-height: calc(100vh - 6.5rem); /* ~toggle + padding */
+      padding: 1.25rem 1.25rem 1.5rem;
+    }
+
+    body.cv-terminal-mode #cv-machine pre::before {
+      content: "amine@portfolio:~$ cat cv.md";
+      display: block;
+      padding-bottom: 0.75rem;
+      margin-bottom: 0.75rem;
+      border-bottom: 1px dashed rgba(183, 247, 194, 0.22);
+      opacity: 0.85;
+      white-space: pre;
+    }
+
+    body.cv-terminal-mode #cv-machine pre::after {
+      /* subtle scanline */
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(183, 247, 194, 0.06),
+        rgba(183, 247, 194, 0.06) 1px,
+        rgba(0, 0, 0, 0) 3px,
+        rgba(0, 0, 0, 0) 6px
+      );
+      opacity: 0.18;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      animation: cv-scan 2.4s linear infinite;
+    }
+
+    @keyframes cv-scan {
+      from {
+        transform: translateY(-8px);
+      }
+      to {
+        transform: translateY(8px);
+      }
+    }
+
+    /* tab content transitions */
+    #cv-human,
+    #cv-machine {
+      transition: opacity 260ms ease, transform 260ms ease;
+    }
+    .cv-enter {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    /* Floating toggle (Parallel-style) */
+    #cv-toggle {
+      position: fixed;
+      left: 50%;
+      bottom: 1.25rem;
+      transform: translateX(-50%);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 9999px;
+      background: rgba(23, 23, 23, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: transform 260ms ease, background-color 420ms ease, border-color 420ms ease;
+    }
+
+    #cv-toggle .cv-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #cv-toggle .cv-dot::after {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.0);
+      transition: background-color 220ms ease;
+    }
+
+    #cv-toggle button {
+      appearance: none;
+      border: none;
+      background: transparent;
+      padding: 0.25rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.72);
+      display: inline-flex;
+      gap: 0.35rem;
+      align-items: center;
+      cursor: pointer;
+      transition: color 220ms ease, background-color 220ms ease;
+    }
+
+    #cv-toggle button.cv-active {
+      color: rgba(255, 255, 255, 0.95);
+    }
+    #cv-toggle button.cv-active .cv-dot::after {
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    /* Terminal mode tweaks for the pill */
+    body.cv-terminal-mode #cv-toggle {
+      background: rgba(5, 6, 7, 0.88);
+      border-color: rgba(183, 247, 194, 0.18);
+    }
+    body.cv-terminal-mode #cv-toggle button {
+      color: rgba(183, 247, 194, 0.75);
+    }
+    body.cv-terminal-mode #cv-toggle button.cv-active {
+      color: rgba(183, 247, 194, 0.98);
+    }
+    body.cv-terminal-mode #cv-toggle .cv-dot {
+      border-color: rgba(183, 247, 194, 0.45);
+    }
+    body.cv-terminal-mode #cv-toggle button.cv-active .cv-dot::after {
+      background: rgba(183, 247, 194, 0.98);
+    }
+
+    @media (max-width: 640px) {
+      #cv-toggle {
+        bottom: 0.85rem;
+      }
+    }
+  </style>
+
+  <div id="cv-toggle" class="print:hidden" aria-label="CV mode toggle">
+    <button type="button" data-cv-tab="human">
+      <span class="cv-dot" aria-hidden="true"></span>
+      Human
+    </button>
+    <button type="button" data-cv-tab="machine">
+      <span class="cv-dot" aria-hidden="true"></span>
+      Machine
+    </button>
+  </div>
+
+  <script>
+    ;(function () {
+      const humanBtn = document.querySelector('[data-cv-tab="human"]')
+      const machineBtn = document.querySelector('[data-cv-tab="machine"]')
+      const human = document.getElementById('cv-human')
+      const machine = document.getElementById('cv-machine')
+      const codeEl = document.getElementById('cv-md-code')
+
+      if (!humanBtn || !machineBtn || !human || !machine) return
+
+      let loaded = false
+
+      function setActive(tab) {
+        const isHuman = tab === 'human'
+        document.body.classList.toggle('cv-terminal-mode', !isHuman)
+
+        human.classList.toggle('hidden', !isHuman)
+        machine.classList.toggle('hidden', isHuman)
+
+        humanBtn.classList.toggle('cv-active', isHuman)
+        machineBtn.classList.toggle('cv-active', !isHuman)
+
+        const entering = isHuman ? human : machine
+        entering.classList.add('cv-enter')
+        // force reflow so transition triggers reliably
+        void entering.offsetWidth
+        entering.classList.remove('cv-enter')
+      }
+
+      async function loadMachine() {
+        if (loaded || !codeEl) return
+        loaded = true
+        try {
+          const res = await fetch('/cv.md', { headers: { Accept: 'text/plain' } })
+          if (!res.ok) throw new Error(`HTTP ${res.status}`)
+          const txt = await res.text()
+          codeEl.textContent = txt
+        } catch (e) {
+          codeEl.textContent = 'Unable to load /cv.md. You can open it directly at /cv.md.'
+        }
+      }
+
+      // init
+      humanBtn.classList.add('cv-active')
+      machineBtn.classList.remove('cv-active')
+
+      humanBtn.addEventListener('click', () => setActive('human'))
+      machineBtn.addEventListener('click', () => {
+        setActive('machine')
+        loadMachine()
+      })
+    })()
+  </script>
+
+  {{/* Article Grid (unchanged from theme) */}}
+  {{ if gt .Pages 0 }}
+    {{ $cardView := .Params.cardView | default (site.Params.list.cardView | default false) }}
+    {{ $cardViewScreenWidth := .Params.cardViewScreenWidth | default (site.Params.list.cardViewScreenWidth | default false) }}
+    {{ $groupByYear := .Params.groupByYear | default (site.Params.list.groupByYear | default false) }}
+    {{ $orderByWeight := .Params.orderByWeight | default (site.Params.list.orderByWeight | default false) }}
+    {{ $groupByYear := and (not $orderByWeight) $groupByYear }}
+
+    {{ if not $cardView }}
+      <section class="space-y-10 w-full">
+        {{ if not $orderByWeight }}
+          {{ range (.Paginate (.Pages.GroupByDate "2006")).PageGroups }}
+            {{ if $groupByYear }}
+              <h2 class="mt-12 text-2xl font-bold text-neutral-700 first:mt-8 dark:text-neutral-300">
+                {{ .Key }}
+              </h2>
+            {{ end }}
+            {{ range .Pages }}
+              {{ partial "article-link/simple.html" . }}
+            {{ end }}
+          {{ end }}
+        {{ else }}
+          {{ range (.Paginate (.Pages.ByWeight)).Pages }}
+            {{ partial "article-link/simple.html" . }}
+          {{ end }}
+        {{ end }}
+      </section>
+    {{ else }}
+      {{ if $groupByYear }}
+        {{ range (.Paginate (.Pages.GroupByDate "2006")).PageGroups }}
+          {{ if $cardViewScreenWidth }}
+            <div class="relative w-screen max-w-[1600px] px-[30px] start-[calc(max(-50vw,-800px)+50%)]">
+              <h2 class="mt-12 mb-3 text-2xl font-bold text-neutral-700 first:mt-8 dark:text-neutral-300">
+                {{ .Key }}
+              </h2>
+              <section class="w-full grid gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+                {{ range .Pages }}
+                  {{ partial "article-link/card.html" . }}
+                {{ end }}
+              </section>
+            </div>
+          {{ else }}
+            <h2 class="mt-12 mb-3 text-2xl font-bold text-neutral-700 first:mt-8 dark:text-neutral-300">
+              {{ .Key }}
+            </h2>
+            <section class="w-full grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+              {{ range .Pages }}
+                {{ partial "article-link/card.html" . }}
+              {{ end }}
+            </section>
+          {{ end }}
+        {{ end }}
+      {{ else }}
+        {{ if $cardViewScreenWidth }}
+          <div class="relative w-screen max-w-[1600px] px-[30px] start-[calc(max(-50vw,-800px)+50%)]">
+            <section class="w-full grid gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+              {{ if not $orderByWeight }}
+                {{ range (.Paginate (.Pages.GroupByDate "2006")).PageGroups }}
+                  {{ range .Pages }}
+                    {{ partial "article-link/card.html" . }}
+                  {{ end }}
+                {{ end }}
+              {{ else }}
+                {{ range (.Paginate (.Pages.ByWeight)).Pages }}
+                  {{ partial "article-link/card.html" . }}
+                {{ end }}
+              {{ end }}
+            </section>
+          </div>
+        {{ else }}
+          <section class="w-full grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+            {{ if not $orderByWeight }}
+              {{ range (.Paginate (.Pages.GroupByDate "2006")).PageGroups }}
+                {{ range .Pages }}
+                  {{ partial "article-link/card.html" . }}
+                {{ end }}
+              {{ end }}
+            {{ else }}
+              {{ range (.Paginate (.Pages.ByWeight)).Pages }}
+                {{ partial "article-link/card.html" . }}
+              {{ end }}
+            {{ end }}
+          </section>
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  {{ else }}
+    <section class="mt-10 prose dark:prose-invert">
+      <p class="py-8 border-t">
+        <em>{{ i18n "list.no_articles" | emojify }}</em>
+      </p>
+    </section>
+  {{ end }}
+
+  {{ partial "pagination.html" . }}
+{{ end }}

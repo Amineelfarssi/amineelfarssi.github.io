@@ -19,7 +19,7 @@ Developed and deployed machine learning models for banking applications, focusin
 - **AML Models**: Developed Anti-Money Laundering models for transaction monitoring and suspicious activity detection
 - **Customer Analytics**: Built ML models for customer analytics, risk assessment, and regulatory compliance
 - **Big Data Processing**: Implemented large-scale data processing pipelines using Spark for distributed model training
-- **Deep Learning**: Developed PyTorch solutions for complex pattern recognition tasks
+- **Deep Learning**: Developed PyTorch solutions for complex document handling tasks
 
 ## Technologies
 

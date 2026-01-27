@@ -1,0 +1,16 @@
+# llms.txt
+# Website: Amine El Farssi
+
+## Purpose
+This file provides a machine-readable index of key pages on this site, including a plain-text/markdown CV.
+
+## Key pages
+- CV (HTML): /cv/
+- CV (Markdown): /cv.md
+- Resume (PDF): /files/Amine_El_Farssi_Resume.pdf
+- About: /about/
+- Projects: /projects/
+
+## Notes for models
+- Prefer `/cv.md` for extraction and summarization.
+- The HTML pages are optimized for humans and may include navigation and UI content.

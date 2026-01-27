@@ -1,5 +1,5 @@
 ---
-title: "Data Scientist (Internship)"
+title: "Data Scientist"
 description: "Predictive models for sea water quality at Bioceanor"
 date: 2020-07-01
 tags: ["Deep Learning", "LSTM", "Time Series", "Python"]

@@ -14,53 +14,57 @@ Download PDF
 {{< /button >}}
 
 ---
+<div style="float:right; width:140px; margin:0 0 1rem 1rem;">
+  <img
+    src="/img/amine.jpg"
+    alt="Amine El Farssi"
+    style="width:100%; height:auto; border-radius:9999px; object-fit:cover;"
+  />
+</div>
 
 ## Professional Summary
 
-AI Engineer with 4+ years of data science experience, currently building production AI agents at one of Belgium's largest banks. Combining deep expertise in machine learning, NLP, and LLMs with strong cloud architecture and DevOps skills. Active participant in architecture design boards, driving technical decisions for scalable AI systems on AWS. Civil engineering background provides unique analytical problem-solving perspective.
+Senior AI Engineer with 5 years of AI/ML/DS experience, currently building and hardening production AI agents at one of Belgium's largest banks. Strong focus on agentic systems, AWS architecture, and operational excellence (evaluation, observability, and security).
 
 ---
 
 ## Professional Experience
 
-### AI Engineer | KBC Bank & Insurance
+### AI Engineer (GenAI / Agentic Systems) | KBC Bank & Insurance
 **Leuven, Belgium** | 2023 - Present
 
-- Building the bank's first internal AI agents for production deployment using AWS Bedrock and AgentCore
-- Designing and architecting cloud-native AI solutions; active participant in architecture design boards
-- Developing RAG (Retrieval-Augmented Generation) systems for internal knowledge management
-- Building event-driven architectures using EventBridge, SQS, and Lambda for scalable AI pipelines
-- Implementing AgentOps frameworks for monitoring, evaluation, and deployment of AI agents
+- Built and shipped production AI agents for core operations, including an insurance claims-handling agent that automated information gathering and follow-ups; improved handler throughput by ~2–3× across ~300 claims/month (target claim type).
+- Designed an event-driven agent runtime with state synchronized to enterprise backends using EventBridge (decoupled integration) and DynamoDB (state management) to meet reliability and consistency constraints.
+- Delivered an autonomous mortgage/credit review agent that retrieves and applies credit policies/SOPs, integrates with CRM dispatching, supports human-in-the-loop, and handles ~150 questions/month (refinancing, variable-rate reviews, simulations).
+- Built a reusable RAG platform on AWS enabling business units to ingest policies/FAQs, generate vector snapshots, and serve consistent retrieval for downstream agents and assistants.
+- Implemented AgentOps + observability: golden datasets as CI/CD deployment gates, post-deploy evaluation for prompt changes, OTEL tracing/logging, and circuit breakers for integration failures.
+- Led security hardening for agentic apps: prompt-injection guardrails, policy enforcement in system prompts, and red-teaming to identify vulnerabilities pre-release.
 
-**Technologies:** Python, AWS (Bedrock, AgentCore, SageMaker, Lambda, ECS, ECR, API Gateway, EventBridge, SQS, DynamoDB, RDS, IAM, ALB), LangChain, Docker
+**Technologies:** Python, AWS (Bedrock, AgentCore, Lambda, EventBridge, SQS, DynamoDB, API Gateway, ECS/ECR, IAM), Docker, Terraform, OpenTelemetry (OTEL)
 
-### Data Scientist | KBC Bank & Insurance
+### Data Scientist (AML / Graph ML) | KBC Bank & Insurance
 **Leuven, Belgium** | 2021 - 2023
 
-- Developed and deployed Anti-Money Laundering (AML) models for transaction monitoring and suspicious activity detection
-- Built machine learning models for customer analytics, risk assessment, and regulatory compliance
-- Implemented large-scale data processing pipelines using Spark for distributed model training
-- Developed deep learning solutions using PyTorch for complex pattern recognition tasks
+- Built AML transaction-monitoring models using an ensemble (GBM / Random Forest / XGBoost) combined with graph-based scoring (diffusion over transaction/customer networks) to increase hit-rate and reduce investigation time versus rule-based detection.
+- Engineered network features (e.g., PageRank, Jaccard similarity, neighborhood overlap) and applied community detection (Leiden) to surface suspicious clusters and patterns beyond single-transaction signals.
+- Operated the system with governance-aligned thresholding (≈~2% of transactions flagged) on high-volume transaction flows (order of magnitude: 10^6/day).
+- Implemented daily batch scoring pipelines using PySpark + Airflow, with experiment tracking and monitoring in MLflow.
 
-**Technologies:** Python, PySpark, PyTorch, Scikit-learn, SQL, MLflow, Git
+**Technologies:** Python, PySpark/Spark, XGBoost, SQL, MLflow, Airflow, Graph analytics
 
 ### Big Data Engineer | JEMS Group
 **France** | Mar 2021 - Aug 2021
 
-- Developed data pipelines using Apache Spark for large-scale data processing
-- Implemented cloud data warehousing solutions using Snowflake
-- Designed ETL workflows for data transformation and integration
+- Migrated and standardized data pipelines on Databricks using the medallion architecture (bronze/silver/gold), delivering a clean curated layer ready for analytics warehousing.
 
-**Technologies:** Apache Spark, Snowflake, Python, SQL, Cloud Platforms
+**Technologies:** Databricks, Spark, SQL, Python
 
-### Data Scientist (Internship) | Bioceanor
-**Valbonne, France** | Jul 2020 - Jan 2021
+### Data Scientist  | Bioceanor
+**Valbonne, France** | Jul 2020 - Mar 2021
 
-- Developed and deployed predictive models for sea water quality analysis
-- Implemented deep learning solutions using LSTM networks for time-series forecasting
-- Contributed to model maintenance and production deployment pipelines
+- Built time-series forecasting models (LSTM) for sea-water quality signals (e.g., turbidity/chlorophyll/temperature), deployed via API and integrated with LoRa-based sensor pipelines; evaluated with MAE.
 
-**Technologies:** Python, Deep Learning, LSTM, TensorFlow/Keras, Time Series Analysis
+**Technologies:** Python, TensorFlow/Keras, LSTM, Time series, APIs, IoT/LoRa
 
 ---
 
@@ -72,9 +76,15 @@ AI Engineer with 4+ years of data science experience, currently building product
 Focus: Machine Learning, Deep Learning, Statistical Modeling, Big Data Technologies
 
 ### Diplome d'Ingenieur in Civil Engineering
-**INSA Strasbourg** | France
+**Strasbourg** | France
 
 Equivalent to Master of Science. Foundation in analytical thinking, mathematical modeling, and complex systems engineering.
+
+---
+
+## Certifications
+
+- AWS Certified Solutions Architect – Associate (2022)
 
 ---
 
@@ -82,11 +92,10 @@ Equivalent to Master of Science. Foundation in analytical thinking, mathematical
 
 | Category | Technologies |
 |----------|-------------|
-| **AI/ML** | LLMs, RAG Systems, AI Agents, AML Models, LangChain, OpenAI API, Anthropic API, Hugging Face, PyTorch, Scikit-learn, MLflow |
-| **AWS** | Bedrock, AgentCore, SageMaker, Lambda, ECS, ECR, API Gateway, EventBridge, SQS, DynamoDB, RDS, IAM, ALB/NLB, S3 |
-| **Programming** | Python (Expert), TypeScript (Intermediate), SQL, Bash, HCL (Terraform) |
-| **Cloud & DevOps** | AWS, Azure, Docker, Kubernetes, Terraform, CI/CD, Infrastructure as Code |
-| **Data Engineering** | PySpark, Pandas, ETL Pipelines, Data Modeling, SQL/NoSQL Databases |
+| **Agentic / GenAI** | AI Agents, RAG Systems, LangChain, LangGraph, Bedrock, Guardrails, Eval harnesses (golden datasets) |
+| **AWS** | Bedrock, AgentCore, Lambda, API Gateway, EventBridge, SQS, DynamoDB, ECS/ECR, IAM, S3 |
+| **Programming** | Python, SQL, TypeScript, Bash, HCL (Terraform) |
+| **Data & MLOps** | PySpark/Spark, Airflow, MLflow, Docker, OpenTelemetry (OTEL), CI/CD |
 
 ---
 
@@ -94,7 +103,7 @@ Equivalent to Master of Science. Foundation in analytical thinking, mathematical
 
 | Language | Proficiency |
 |----------|-------------|
-| Arabic | Native |
-| French | Fluent |
+| French | Native |
 | English | Fluent |
-| Dutch | A2 (Currently Learning) |
+| Arabic | Fluent |
+| Dutch | B1 (Currently Learning) |

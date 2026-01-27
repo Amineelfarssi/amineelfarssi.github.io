@@ -1,6 +1,6 @@
 ---
 title: "About Me"
-description: "AI Engineer with 4+ years of experience building production AI systems"
+description: "AI Engineer with 5 years of AI/ML/DS experience, currently building production AI agents at one of Belgium's largest banks."
 showDate: false
 showReadingTime: false
 showWordCount: false
@@ -9,12 +9,12 @@ sharingLinks: false
 ---
 
 {{< lead >}}
-AI Engineer with 4+ years of data science experience, currently building production AI agents at one of Belgium's largest banks.
+AI Engineer with 5 years of AI/ML/DS experience, currently building production AI agents at one of Belgium's largest banks.
 {{< /lead >}}
 
 ## Background
 
-I combine deep expertise in **machine learning**, **NLP**, and **LLMs** with strong **cloud architecture** and **DevOps** skills. My civil engineering background provides a unique analytical problem-solving perspective that I apply to complex AI challenges.
+AI Engineer with 5 years of AI/ML/DS experience, currently building production AI agents at one of Belgium's largest banks. Combining deep expertise in machine learning, GenAI  with strong cloud architecture and DevOps skills. Active participant in architecture design boards, driving technical decisions for scalable AI systems on AWS. 
 
 Currently at **KBC Bank & Insurance**, I'm:
 - Building the bank's first internal AI agents for production deployment
