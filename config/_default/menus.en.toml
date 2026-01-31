@@ -10,6 +10,11 @@
   weight = 20
 
 [[main]]
+  name = "Skills"
+  pageRef = "skills"
+  weight = 25
+
+[[main]]
   name = "Projects"
   pageRef = "projects"
   weight = 30
@@ -39,5 +44,5 @@
 # Footer Menu
 [[footer]]
   name = "Contact"
-  url = "mailto:your.email@example.com"
+  url = "mailto:amine.elfarssi@gmail.com"
   weight = 10

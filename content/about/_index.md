@@ -1,6 +1,6 @@
 ---
 title: "About Me"
-description: "AI Engineer with 5 years of AI/ML/DS experience, currently building production AI agents at one of Belgium's largest banks."
+description: "AI Engineer building production AI agents at one of Belgium's largest banks"
 showDate: false
 showReadingTime: false
 showWordCount: false
@@ -9,58 +9,94 @@ sharingLinks: false
 ---
 
 {{< lead >}}
-AI Engineer with 5 years of AI/ML/DS experience, currently building production AI agents at one of Belgium's largest banks.
+AI Engineer building production AI agents at KBC Bank & Insurance. 5+ years of AI/ML experience, from AML detection to enterprise agentic systems.
 {{< /lead >}}
+
+## What I Do
+
+I build **AI that acts, not just talks**. At KBC, I'm leading the development of the bank's first production AI agents — systems that can reason, use tools, and complete real tasks.
+
+{{< mermaid >}}
+flowchart LR
+    A[🧠 Foundation Models] --> B[🦾 Agent Orchestration]
+    B --> C[🔧 Tool Use]
+    C --> D[✅ Real Tasks Done]
+    style D fill:#10b981,color:#fff
+{{< /mermaid >}}
+
+## Current Focus
+
+{{< alert icon="rocket" cardColor="#1e3a5f" iconColor="#60a5fa" textColor="#f0f0f0" >}}
+**Building enterprise AI agents** that handle document processing, knowledge retrieval, and banking workflows at scale.
+{{< /alert >}}
+
+- **Agentic Architecture** — Multi-agent systems, tool orchestration, memory management
+- **RAG Systems** — Enterprise knowledge retrieval with hybrid search
+- **AgentOps** — Evaluation, observability, and guardrails for production agents
+- **Protocol Design** — MCP, A2A, AG-UI for interoperable agent systems
+
+## Technical Stack
+
+### Agent Frameworks
+{{< badge >}}AWS Bedrock Agents{{< /badge >}}
+{{< badge >}}LangChain{{< /badge >}}
+{{< badge >}}LangGraph{{< /badge >}}
+{{< badge >}}CrewAI{{< /badge >}}
+
+### Foundation Models
+{{< badge >}}Claude{{< /badge >}}
+{{< badge >}}GPT-4{{< /badge >}}
+{{< badge >}}Gemini{{< /badge >}}
+{{< badge >}}Llama{{< /badge >}}
+
+### Cloud & Infrastructure
+{{< badge >}}AWS{{< /badge >}}
+{{< badge >}}Python{{< /badge >}}
+{{< badge >}}Docker{{< /badge >}}
+{{< badge >}}Terraform{{< /badge >}}
+
+### Data & ML
+{{< badge >}}PyTorch{{< /badge >}}
+{{< badge >}}PySpark{{< /badge >}}
+{{< badge >}}Vector DBs{{< /badge >}}
+{{< badge >}}MLflow{{< /badge >}}
 
 ## Background
 
-AI Engineer with 5 years of AI/ML/DS experience, currently building production AI agents at one of Belgium's largest banks. Combining deep expertise in machine learning, GenAI  with strong cloud architecture and DevOps skills. Active participant in architecture design boards, driving technical decisions for scalable AI systems on AWS. 
+| Period | Role | Company |
+|--------|------|---------|
+| 2023–Present | AI Engineer | KBC Bank & Insurance |
+| 2021–2023 | Data Scientist | KBC Bank & Insurance |
+| 2021 | Big Data Engineer | JEMS Group |
+| 2020–2021 | Data Scientist | Bioceanor |
 
-Currently at **KBC Bank & Insurance**, I'm:
-- Building the bank's first internal AI agents for production deployment
-- Designing cloud-native AI solutions on AWS
-- Actively participating in architecture design boards driving technical decisions
+## Writing
 
-## Technical Skills
+I write about agent architecture, production ML systems, and the emerging agentic protocol stack:
 
-{{< badge >}}Python{{< /badge >}}
-{{< badge >}}AWS{{< /badge >}}
-{{< badge >}}LangChain{{< /badge >}}
-{{< badge >}}PyTorch{{< /badge >}}
-{{< badge >}}Docker{{< /badge >}}
-{{< badge >}}Kubernetes{{< /badge >}}
-{{< badge >}}Terraform{{< /badge >}}
-{{< badge >}}RAG Systems{{< /badge >}}
-{{< badge >}}AI Agents{{< /badge >}}
-{{< badge >}}PySpark{{< /badge >}}
+- [Inside OpenClaw: Agent Architecture Deep Dive](/blog/openclaw-architecture-deep-dive/)
+- [Agentic Protocols: MCP, A2A, A2UI, UCP](/blog/agentic-protocols-a2ui-a2a-mcp-ucp/)
 
-### AI/ML
-LLMs, RAG Systems, AI Agents, AML Models, LangChain, OpenAI API, Anthropic API, Hugging Face, PyTorch, Scikit-learn, MLflow
+## Open Source
 
-### AWS
-Bedrock, AgentCore, SageMaker, Lambda, ECS, ECR, API Gateway, EventBridge, SQS, DynamoDB, RDS, S3
+**MiniClaw** — A minimal Python agent framework implementing OpenClaw's architecture patterns. ~2,800 lines of educational, readable code demonstrating sessions, memory, tools, and the agent loop.
 
-### Cloud & DevOps
-AWS, Azure, Docker, Kubernetes, Terraform, CI/CD, Infrastructure as Code
+{{< button href="/projects/miniclaw" >}}
+View MiniClaw
+{{< /button >}}
 
-### Data Engineering
-PySpark, Pandas, ETL Pipelines, Data Modeling, SQL/NoSQL Databases
+## Let's Connect
 
-## Languages
+I'm always interested in discussing:
+- Agent architectures and patterns
+- Production AI challenges
+- Open source collaboration
+- Speaking opportunities
 
-- **Arabic** - Native
-- **French** - Fluent
-- **English** - Fluent
-- **Dutch** - A2 (Currently Learning)
+{{< button href="https://linkedin.com/in/amineelfarssi" target="_blank" >}}
+LinkedIn
+{{< /button >}}
 
-## Education
-
-### Master of Science in Applied Data Science
-**Data ScienceTech Institute (DSTI)** | France | 2020 - 2021
-
-Focus: Machine Learning, Deep Learning, Statistical Modeling, Big Data Technologies
-
-### Diplome d'Ingenieur in Civil Engineering
-**INSA Strasbourg** | France
-
-Equivalent to Master of Science. Foundation in analytical thinking, mathematical modeling, and complex systems engineering.
+{{< button href="https://github.com/amineelfarssi" target="_blank" >}}
+GitHub
+{{< /button >}}
