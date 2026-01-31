@@ -85,8 +85,8 @@ Agents can interact with:
 ### Agent Infrastructure
 | Component | Technology |
 |-----------|------------|
-| Orchestration | LangGraph, AWS Bedrock Agents |
-| Foundation Models | Claude 3.5, GPT-4 (via Bedrock) |
+| Orchestration | LangGraph, AWS Bedrock Agents, AWS AgentCore Runtime |
+| Foundation Models | Claude, OpenAI models (via Bedrock) |
 | Memory | DynamoDB, Redis |
 | Queuing | SQS, EventBridge |
 | Compute | Lambda, ECS |

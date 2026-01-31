@@ -137,6 +137,6 @@ MiniClaw sits in the middle: **fully functional** but **completely readable**. E
 - [OpenClaw Architecture Deep Dive](/blog/openclaw-architecture-deep-dive/) — The blog explaining these patterns
 - [Agentic Protocols](/blog/agentic-protocols-a2ui-a2a-mcp-ucp/) — MCP, A2A, A2UI, UCP
 
-{{< button href="https://github.com/amineelfarssi" target="_blank" >}}
+{{< button href="https://github.com/Amineelfarssi/miniclaw" target="_blank" >}}
 View on GitHub
 {{< /button >}}

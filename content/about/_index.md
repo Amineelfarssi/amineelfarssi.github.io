@@ -45,7 +45,7 @@ flowchart LR
 
 ### Foundation Models
 {{< badge >}}Claude{{< /badge >}}
-{{< badge >}}GPT-4{{< /badge >}}
+{{< badge >}}OpenAI{{< /badge >}}
 {{< badge >}}Gemini{{< /badge >}}
 {{< badge >}}Llama{{< /badge >}}
 

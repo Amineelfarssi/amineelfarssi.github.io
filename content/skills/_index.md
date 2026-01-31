@@ -114,6 +114,7 @@ Deep understanding of the emerging protocol stack:
 
 {{< badge >}}LangChain{{< /badge >}}
 {{< badge >}}LangGraph{{< /badge >}}
+{{< badge >}}AWS AgentCore Runtime{{< /badge >}}
 {{< badge >}}CrewAI{{< /badge >}}
 {{< badge >}}AWS Strands{{< /badge >}}
 {{< badge >}}Google ADK{{< /badge >}}
@@ -121,10 +122,10 @@ Deep understanding of the emerging protocol stack:
 
 ### Foundation Models
 
-{{< badge >}}Claude 3.5/4{{< /badge >}}
-{{< badge >}}GPT-4o{{< /badge >}}
+{{< badge >}}Claude{{< /badge >}}
+{{< badge >}}OpenAI{{< /badge >}}
 {{< badge >}}Gemini{{< /badge >}}
-{{< badge >}}Llama 3{{< /badge >}}
+{{< badge >}}Llama{{< /badge >}}
 {{< badge >}}Mistral{{< /badge >}}
 
 ---

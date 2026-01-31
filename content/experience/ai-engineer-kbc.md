@@ -48,9 +48,9 @@ Building the bank's first production AI agents — from architecture design to d
 
 ### Agent Infrastructure
 {{< badge >}}AWS Bedrock{{< /badge >}}
+{{< badge >}}AWS AgentCore Runtime{{< /badge >}}
 {{< badge >}}LangChain{{< /badge >}}
 {{< badge >}}LangGraph{{< /badge >}}
-{{< badge >}}AgentCore{{< /badge >}}
 
 ### Cloud & DevOps
 {{< badge >}}AWS Lambda{{< /badge >}}
@@ -65,8 +65,8 @@ Building the bank's first production AI agents — from architecture design to d
 {{< badge >}}Custom Evals{{< /badge >}}
 
 ### Foundation Models
-{{< badge >}}Claude 3.5{{< /badge >}}
-{{< badge >}}GPT-4{{< /badge >}}
+{{< badge >}}Claude{{< /badge >}}
+{{< badge >}}OpenAI{{< /badge >}}
 {{< badge >}}Titan Embeddings{{< /badge >}}
 
 ## Architecture Highlight
