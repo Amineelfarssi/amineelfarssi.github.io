@@ -1,7 +1,7 @@
 ---
 title: "Agentic Frameworks Deep Dive: pi-agent-core vs Google ADK vs AWS Strands vs CrewAI vs LangGraph vs Pydantic AI"
 date: 2026-02-01
-description: "A comprehensive comparison of major agentic frameworks examining session management, memory systems, webhooks, agent loops, and replay capabilities."
+description: "A comprehensive comparison of major agentic frameworks examining session management, memory systems, protocol support, agent loops, and replay capabilities."
 tags: ["AI Agents", "Frameworks", "Architecture", "LangGraph", "CrewAI", "AWS Strands", "Google ADK", "Pydantic AI", "OpenClaw"]
 categories: ["Technical Deep Dive"]
 showTableOfContents: true
@@ -10,7 +10,7 @@ showWordCount: true
 ---
 
 {{< lead >}}
-Building production AI agents requires choosing the right framework. This analysis examines **pi-agent-core** (OpenClaw's runtime), **Google ADK**, **AWS Strands**, **CrewAI**, **LangGraph**, and **Pydantic AI** across critical dimensions: sessions, memory, webhooks, agent loops, and replay support.
+Building production AI agents requires choosing the right framework. This analysis examines **pi-agent-core** (OpenClaw's runtime), **Google ADK**, **AWS Strands**, **CrewAI**, **LangGraph**, and **Pydantic AI** across critical dimensions: sessions, memory, protocols, agent loops, and replay support.
 {{< /lead >}}
 
 ---
@@ -18,17 +18,70 @@ Building production AI agents requires choosing the right framework. This analys
 ## Executive Summary
 
 {{< alert icon="lightbulb" cardColor="#1e3a5f" iconColor="#60a5fa" textColor="#f0f0f0" >}}
-**Key Finding:** All frameworks converge on similar patterns — the agent loop, tool calling, and state management — but differ significantly in their **abstraction level**, **deployment story**, and **enterprise readiness**.
+**Key Finding:** All frameworks converge on similar patterns — the agent loop, tool calling, and state management — but differ significantly in their **abstraction level**, **protocol support**, **deployment story**, and **enterprise readiness**.
 {{< /alert >}}
 
-| Framework | Primary Use Case | Abstraction Level | Session Support | Memory System |
-|-----------|-----------------|-------------------|-----------------|---------------|
-| **pi-agent-core** | Multi-channel orchestration | High | ⭐⭐⭐⭐⭐ Full | Workspace-based |
-| **Google ADK** | GCP-native agents | Medium | ⭐⭐⭐⭐ Native | Session + Memory services |
-| **AWS Strands** | AWS-native agents | Medium | ⭐⭐⭐⭐ Native | AgentCore Memory |
-| **LangGraph** | Custom agent workflows | Low | ⭐⭐⭐⭐⭐ Full | Checkpointing |
-| **CrewAI** | Multi-agent teams | High | ⭐⭐⭐ Basic | Short/Long-term + Entity |
-| **Pydantic AI** | Type-safe agents | Medium | ⭐⭐⭐ Manual | Message history |
+| Framework | Primary Use Case | Protocol Support | Session Support | Memory System |
+|-----------|-----------------|------------------|-----------------|---------------|
+| **Google ADK** | Multi-lang agent development | ⭐⭐⭐⭐⭐ Full (MCP, A2A, AG-UI) | ⭐⭐⭐⭐⭐ Full | Session + Memory services |
+| **pi-agent-core** | Multi-channel orchestration | ⭐⭐⭐⭐ (MCP, channels) | ⭐⭐⭐⭐⭐ Full | Workspace-based |
+| **AWS Strands** | AWS-native agents | ⭐⭐⭐⭐ (MCP, A2A, AG-UI) | ⭐⭐⭐⭐ Native | AgentCore Memory |
+| **LangGraph** | Custom agent workflows | ⭐⭐⭐ (MCP via tools) | ⭐⭐⭐⭐⭐ Full | Checkpointing |
+| **CrewAI** | Multi-agent teams | ⭐⭐⭐ Basic | ⭐⭐⭐ Basic | Short/Long-term + Entity |
+| **Pydantic AI** | Type-safe agents | ⭐⭐ Basic | ⭐⭐⭐ Manual | Message history |
+
+---
+
+## Protocol Support: The New Standard
+
+{{< alert icon="globe" cardColor="#10b981" iconColor="#fff" textColor="#fff" >}}
+**Important Context:** Google played a central role in creating several key agentic protocols (A2A, parts of UCP). Their ADK naturally has first-class support for the protocols they helped design.
+{{< /alert >}}
+
+### Protocol Landscape
+
+| Protocol | Purpose | Origin |
+|----------|---------|--------|
+| **MCP** (Model Context Protocol) | Tool/resource standardization | Anthropic |
+| **A2A** (Agent-to-Agent) | Inter-agent coordination | Google |
+| **AG-UI** / **A2UI** | Agent-to-User interfaces | CopilotKit/Community |
+| **UCP** (Universal Commerce Protocol) | Agentic commerce | Google |
+
+### Framework Protocol Support Matrix
+
+| Framework | MCP | A2A | AG-UI | UCP | Notes |
+|-----------|-----|-----|-------|-----|-------|
+| **Google ADK** | ✅ Native | ✅ Native (creator) | ✅ Native | ✅ Native | Most comprehensive |
+| **AWS Strands** | ✅ Native | ✅ Native | ✅ Native | - | Strong protocol support |
+| **pi-agent-core** | ✅ Via tools | - | - | - | Channel-focused |
+| **LangGraph** | ✅ Via integrations | - | - | - | Flexible integration |
+| **CrewAI** | ⚠️ Community | - | - | - | Task-focused |
+| **Pydantic AI** | ⚠️ Manual | - | - | - | Minimal protocol layer |
+
+### Google ADK Protocol Excellence
+
+Google ADK provides **first-class support** for the protocols they helped create:
+
+```python
+# A2A - Exposing an agent
+from google.adk.a2a import A2AServer
+
+server = A2AServer(agent=my_agent)
+server.expose(port=8080)
+
+# A2A - Consuming another agent
+from google.adk.a2a import A2AClient
+
+remote_agent = A2AClient("https://other-agent.example.com")
+result = await remote_agent.invoke("analyze this data")
+```
+
+**ADK Protocol Features:**
+- ✅ MCP tools integration
+- ✅ A2A server/client (exposing & consuming)
+- ✅ AG-UI (Agentic UI) support
+- ✅ Bidi-streaming for real-time
+- ✅ Multi-language (Python, Go, Java, TypeScript)
 
 ---
 
@@ -36,32 +89,55 @@ Building production AI agents requires choosing the right framework. This analys
 
 {{< mermaid >}}
 flowchart TB
-    subgraph HIGH["High Abstraction"]
-        OC[pi-agent-core/OpenClaw]
-        CR[CrewAI]
+    subgraph PROTOCOLS["Protocol-First"]
+        ADK[Google ADK<br/>MCP + A2A + AG-UI + UCP]
+        STR[AWS Strands<br/>MCP + A2A + AG-UI]
     end
     
-    subgraph MED["Medium Abstraction"]
-        ADK[Google ADK]
-        STR[AWS Strands]
-        PYD[Pydantic AI]
+    subgraph CHANNELS["Channel-First"]
+        OC[pi-agent-core/OpenClaw<br/>WhatsApp, Telegram, etc.]
     end
     
-    subgraph LOW["Low Abstraction"]
-        LG[LangGraph]
+    subgraph WORKFLOW["Workflow-First"]
+        LG[LangGraph<br/>Graph-based orchestration]
+        CR[CrewAI<br/>Multi-agent teams]
     end
     
-    HIGH --> MED
-    MED --> LOW
+    subgraph SIMPLE["Simplicity-First"]
+        PYD[Pydantic AI<br/>Type-safe agents]
+    end
 {{< /mermaid >}}
 
 ---
 
 ## 1. Session Management
 
+### Google ADK
+
+Clean separation of Session, State, and Memory with **session rewind** capability:
+
+```python
+# ADK Session concepts
+Session    → Single conversation thread (contains Events)
+State      → Data within current conversation (session.state)
+Memory     → Cross-session searchable knowledge store
+
+# Services
+SessionService → CRUD for sessions, append events, modify state
+MemoryService  → Ingest from completed sessions, search knowledge
+```
+
+**Features:**
+- ✅ SessionService for lifecycle management
+- ✅ State persistence within sessions
+- ✅ **Session rewind** — travel back to previous states
+- ✅ Session migration between backends
+- ✅ In-memory (testing) and cloud (production) backends
+- ✅ Multi-language support (Python, Go, Java, TypeScript)
+
 ### pi-agent-core (OpenClaw)
 
-The most sophisticated session system with structured keys and comprehensive lifecycle management:
+Sophisticated session system with structured keys and comprehensive lifecycle:
 
 ```
 Session Keys:
@@ -78,40 +154,6 @@ cron:daily-report                  → Scheduled tasks
 - ✅ JSONL transcript persistence
 - ✅ Per-session queuing (serialized runs)
 - ✅ Session write locks for consistency
-
-```javascript
-// OpenClaw session lifecycle
-session: {
-  dmScope: "main",           // main | per-peer | per-channel-peer
-  reset: {
-    mode: "daily",
-    atHour: 4,
-    idleMinutes: 120
-  }
-}
-```
-
-### Google ADK
-
-Clean separation of Session, State, and Memory:
-
-```python
-# ADK Session concepts
-Session    → Single conversation thread (contains Events)
-State      → Data within current conversation (session.state)
-Memory     → Cross-session searchable knowledge store
-
-# Services
-SessionService → CRUD for sessions, append events, modify state
-MemoryService  → Ingest from completed sessions, search knowledge
-```
-
-**Features:**
-- ✅ SessionService for lifecycle management
-- ✅ State persistence within sessions
-- ✅ In-memory implementations for testing
-- ✅ Cloud-based backends for production
-- ⚠️ Simpler key structure than pi-agent-core
 
 ### AWS Strands
 
@@ -139,7 +181,6 @@ Checkpointing-based persistence with maximum flexibility:
 ```python
 from langgraph.checkpoint.sqlite import SqliteSaver
 
-# Compile with checkpointer
 memory = SqliteSaver.from_conn_string(":memory:")
 graph = workflow.compile(checkpointer=memory)
 
@@ -153,7 +194,6 @@ graph.invoke(state, config)
 - ✅ Checkpoint/restore at any point
 - ✅ Custom checkpointer implementations
 - ✅ Time-travel debugging
-- ⚠️ Requires manual session key design
 
 ### CrewAI
 
@@ -165,17 +205,12 @@ crew = Crew(
     tasks=[...],
     memory=True,  # Enables memory system
 )
-
-# Storage locations
-# macOS: ~/Library/Application Support/CrewAI/{project}/
-# Linux: ~/.local/share/CrewAI/{project}/
 ```
 
 **Features:**
 - ✅ Automatic storage location handling
 - ✅ Project-scoped isolation
-- ⚠️ Less explicit session control
-- ⚠️ Crew-centric, not conversation-centric
+- ⚠️ Less explicit session control (crew-centric)
 
 ### Pydantic AI
 
@@ -183,17 +218,12 @@ Manual message history management:
 
 ```python
 result = agent.run_sync("Hello", message_history=previous_messages)
-
-# Access messages
 all_messages = result.all_messages()
-new_messages = result.new_messages()
 ```
 
 **Features:**
 - ✅ Type-safe message handling
-- ✅ Simple append-based continuation
-- ⚠️ No built-in persistence
-- ⚠️ Manual session tracking required
+- ⚠️ No built-in persistence (manual tracking)
 
 ---
 
@@ -202,31 +232,37 @@ new_messages = result.new_messages()
 {{< chart >}}
 type: 'radar',
 data: {
-  labels: ['Short-term', 'Long-term', 'Entity', 'Semantic Search', 'Cross-session', 'Compaction'],
+  labels: ['Short-term', 'Long-term', 'Entity', 'Semantic Search', 'Cross-session', 'Session Rewind'],
   datasets: [{
+    label: 'Google ADK',
+    data: [90, 90, 75, 85, 90, 95],
+    fill: true,
+    backgroundColor: 'rgba(66, 133, 244, 0.2)',
+    borderColor: 'rgb(66, 133, 244)',
+  }, {
     label: 'pi-agent-core',
-    data: [95, 90, 80, 95, 95, 95],
+    data: [95, 90, 80, 95, 95, 85],
     fill: true,
     backgroundColor: 'rgba(34, 197, 94, 0.2)',
     borderColor: 'rgb(34, 197, 94)',
   }, {
-    label: 'CrewAI',
-    data: [90, 85, 90, 80, 75, 60],
+    label: 'AWS Strands',
+    data: [90, 85, 70, 80, 85, 80],
     fill: true,
-    backgroundColor: 'rgba(59, 130, 246, 0.2)',
-    borderColor: 'rgb(59, 130, 246)',
+    backgroundColor: 'rgba(255, 153, 0, 0.2)',
+    borderColor: 'rgb(255, 153, 0)',
   }, {
     label: 'LangGraph',
-    data: [95, 80, 60, 70, 90, 85],
+    data: [95, 80, 60, 70, 90, 95],
     fill: true,
     backgroundColor: 'rgba(168, 85, 247, 0.2)',
     borderColor: 'rgb(168, 85, 247)',
   }, {
-    label: 'Google ADK',
-    data: [85, 85, 70, 80, 85, 70],
+    label: 'CrewAI',
+    data: [90, 85, 90, 80, 75, 50],
     fill: true,
-    backgroundColor: 'rgba(249, 115, 22, 0.2)',
-    borderColor: 'rgb(249, 115, 22)',
+    backgroundColor: 'rgba(59, 130, 246, 0.2)',
+    borderColor: 'rgb(59, 130, 246)',
   }]
 },
 options: {
@@ -235,6 +271,31 @@ options: {
   }
 }
 {{< /chart >}}
+
+### Google ADK Memory
+
+**Service-based architecture with MemoryService:**
+
+```python
+# MemoryService handles:
+# - Ingesting from completed sessions
+# - Cross-session search
+# - Knowledge base management
+
+memory_service = MemoryService()
+
+# Ingest session into long-term memory
+memory_service.ingest(completed_session)
+
+# Search across all memory
+results = memory_service.search(query="previous decisions about X")
+```
+
+**Features:**
+- ✅ Session → Memory ingestion pipeline
+- ✅ Cross-session search
+- ✅ Context caching
+- ✅ Context compression
 
 ### pi-agent-core Memory
 
@@ -253,7 +314,6 @@ options: {
 - ✅ Vector search with embeddings (OpenAI, Gemini, local)
 - ✅ Hybrid search (BM25 + vector)
 - ✅ Pre-compaction memory flush
-- ✅ Session transcript indexing (experimental)
 - ✅ `memory_search` and `memory_get` tools
 
 ### CrewAI Memory
@@ -266,45 +326,6 @@ options: {
 | Long-Term | Past insights | SQLite |
 | Entity | People/places/concepts | ChromaDB (RAG) |
 | Contextual | Combined view | Aggregated |
-
-```python
-crew = Crew(
-    memory=True,
-    embedder={
-        "provider": "ollama",
-        "config": {"model": "mxbai-embed-large"}
-    }
-)
-```
-
-### LangGraph Memory
-
-**Checkpoint-based with flexible backends:**
-
-```python
-# Short-term: within graph state
-# Long-term: external store integration
-
-from langgraph.store.memory import InMemoryStore
-store = InMemoryStore()
-
-# Store can persist across sessions
-graph = workflow.compile(checkpointer=memory, store=store)
-```
-
-### Google ADK Memory
-
-**Service-based architecture:**
-
-```python
-# MemoryService handles:
-# - Ingesting from completed sessions
-# - Cross-session search
-# - Knowledge base management
-
-memory_service = CloudMemoryService()
-results = memory_service.search(query="previous decisions")
-```
 
 ---
 
@@ -327,59 +348,55 @@ flowchart LR
 
 ### Loop Implementation Comparison
 
-| Framework | Loop Style | Streaming | Tool Execution | Max Iterations |
+| Framework | Loop Style | Streaming | Bidi-Streaming | Max Iterations |
 |-----------|-----------|-----------|----------------|----------------|
-| **pi-agent-core** | Event-driven | ✅ Full | Async queued | Configurable |
-| **Google ADK** | Service-based | ✅ Async iterators | Concurrent/Sequential | Configurable |
-| **AWS Strands** | Event loop | ✅ Callback handlers | Executor pattern | Configurable |
-| **LangGraph** | Graph traversal | ✅ Native | Node execution | Graph structure |
-| **CrewAI** | Task delegation | ✅ Verbose mode | Agent-based | Task completion |
-| **Pydantic AI** | Request/response | ✅ run_stream | Sync/async | Result-based |
+| **Google ADK** | Event-driven | ✅ Full | ✅ Native | Configurable |
+| **pi-agent-core** | Event-driven | ✅ Full | - | Configurable |
+| **AWS Strands** | Event loop | ✅ Handlers | ✅ Native | Configurable |
+| **LangGraph** | Graph traversal | ✅ Native | - | Graph structure |
+| **CrewAI** | Task delegation | ✅ Verbose | - | Task completion |
+| **Pydantic AI** | Request/response | ✅ run_stream | - | Result-based |
 
-### pi-agent-core Loop Details
+### Google ADK Bidi-Streaming
 
-```
-1. agent RPC validates, resolves session → returns {runId, acceptedAt}
-2. agentCommand:
-   - resolves model + thinking/verbose
-   - loads skills snapshot
-   - calls runEmbeddedPiAgent
-3. runEmbeddedPiAgent:
-   - serializes via per-session + global queues
-   - subscribes to pi events
-   - streams assistant/tool deltas
-   - enforces timeout
-4. Events emitted:
-   - tool → start/update/end
-   - assistant → text deltas
-   - lifecycle → start/end/error
-```
-
-### AWS Strands Loop
+Unique capability for real-time voice/video agents:
 
 ```python
-from strands import Agent
+# ADK Bidi-streaming models
+- Nova Sonic (AWS)
+- Gemini Live (Google)
+- OpenAI Realtime
 
-agent = Agent(
-    model=bedrock_model,
-    tools=[...],
-    callback_handler=StreamHandler()  # For streaming
-)
-
-# Event loop handles:
-# - Tool orchestration
-# - State management
-# - Streaming responses
-result = agent("Process this request")
+# Supports real-time:
+- Audio input/output
+- Video input
+- Interruptions
+- Session management
 ```
 
 ---
 
 ## 4. Webhooks & External Integration
 
+### Google ADK
+
+**Most comprehensive protocol and deployment support:**
+
+| Integration | Support |
+|------------|---------|
+| MCP Tools | ✅ Native |
+| A2A Protocol | ✅ Native (server + client) |
+| AG-UI | ✅ Native |
+| OpenAPI Tools | ✅ Native |
+| Cloud Run | ✅ Native |
+| GKE | ✅ Native |
+| Agent Engine | ✅ Native |
+
+**Third-party integrations:** Asana, Atlassian, GitHub, GitLab, MongoDB, Notion, Stripe, and more.
+
 ### pi-agent-core (OpenClaw)
 
-**Most comprehensive channel support:**
+**Most comprehensive messaging channel support:**
 
 | Channel | Protocol | Real-time |
 |---------|----------|-----------|
@@ -388,73 +405,40 @@ result = agent("Process this request")
 | Discord | discord.js (WebSocket) | ✅ |
 | Slack | Bolt (Socket Mode) | ✅ |
 | Signal | signal-cli (dbus) | ✅ |
+| iMessage | Via bridges | ✅ |
 | Webhook | HTTP POST | ✅ |
-
-```javascript
-// Gateway WebSocket protocol
-{"type": "req", "id": "1", "method": "agent", "params": {...}}
-{"type": "event", "event": "agent", "payload": {"stream": "assistant"}}
-```
 
 ### AWS Strands
 
-**Native AWS integration + external protocols:**
+**AWS-native + community integrations:**
 
 - AG-UI protocol support
-- A2A (Agent-to-Agent) protocol
-- Telegram integration (community)
-- Teams integration (community)
+- A2A protocol support
+- Telegram (community)
+- Teams (community)
 - UTCP tool protocol
-
-### Google ADK
-
-**Multi-language webhook support:**
-
-- Python/Go/Java/TypeScript SDKs
-- HTTP endpoints
-- gRPC support
-- Cloud Run integration
-
-### LangGraph
-
-**LangServe for deployment:**
-
-```python
-from langserve import add_routes
-add_routes(app, graph, path="/agent")
-
-# Endpoints:
-# POST /agent/invoke
-# POST /agent/stream
-# POST /agent/batch
-```
 
 ---
 
 ## 5. Session Replay & Debugging
 
-### pi-agent-core
+### Google ADK
 
-**JSONL transcripts enable full replay:**
+**Session rewind is a standout feature:**
 
-```bash
-# Session transcripts stored as:
-~/.openclaw/agents/<agentId>/sessions/<sessionId>.jsonl
+```python
+# Rewind to previous session state
+session_service.rewind(session_id, to_event_index=5)
 
-# Each line is a complete message event
-{"role": "user", "content": "...", "timestamp": "..."}
-{"role": "assistant", "content": "...", "tool_calls": [...]}
+# Full observability stack
+- Cloud Trace integration
+- BigQuery Agent Analytics
+- AgentOps / Arize / MLflow / Phoenix support
 ```
-
-**Features:**
-- ✅ Full conversation replay from JSONL
-- ✅ Time-travel through session history
-- ✅ Compaction summaries preserved
-- ✅ Tool results in transcript
 
 ### LangGraph
 
-**Best-in-class debugging with LangSmith:**
+**Best-in-class time-travel debugging:**
 
 ```python
 # Time-travel debugging
@@ -465,42 +449,26 @@ for state in graph.get_state_history(config):
 graph.update_state(config, new_values)
 ```
 
-**Features:**
-- ✅ Checkpoint-based replay
-- ✅ State history traversal
-- ✅ Human-in-the-loop interrupts
-- ✅ LangSmith visualization
+### pi-agent-core
+
+**JSONL transcripts enable full replay:**
+
+```bash
+# Session transcripts
+~/.openclaw/agents/<agentId>/sessions/<sessionId>.jsonl
+
+# Full conversation replay possible
+# Compaction summaries preserved
+```
 
 ### AWS Strands
 
 **Comprehensive observability:**
 
-```python
-# OpenTelemetry integration
-from strands.telemetry import configure_tracing
-configure_tracing(service_name="my-agent")
-
-# Metrics, traces, logs
-# → CloudWatch / X-Ray / Custom backends
-```
-
-**Features:**
-- ✅ OTEL traces for replay analysis
-- ✅ Strands Evals SDK for trajectory evaluation
-- ✅ Goal success rate tracking
-- ✅ Tool selection accuracy metrics
-
-### CrewAI
-
-**Task-based replay:**
-
-```python
-# Long-term memory stores task results
-# Can be queried for past executions
-
-from crewai.utilities.paths import db_storage_path
-# SQLite: long_term_memory_storage.db
-```
+- OpenTelemetry traces
+- Strands Evals SDK
+- Trajectory evaluation
+- Goal success rate tracking
 
 ---
 
@@ -521,34 +489,15 @@ from crewai.utilities.paths import db_storage_path
 | **State Management** | Some form of checkpoint/session/state |
 | **Multi-agent** | Delegation, handoff, or graph patterns |
 
-### Tool Definition Convergence
-
-All frameworks use similar tool schemas:
-
-```python
-# Universal pattern
-{
-    "name": "get_weather",
-    "description": "Get weather for a city",
-    "parameters": {
-        "type": "object",
-        "properties": {
-            "city": {"type": "string"}
-        },
-        "required": ["city"]
-    }
-}
-```
-
 ### Multi-Agent Patterns
 
-| Pattern | Strands | CrewAI | LangGraph | ADK |
-|---------|---------|--------|-----------|-----|
-| Agents as Tools | ✅ | ✅ | ✅ | ✅ |
-| Swarm | ✅ | - | ✅ | - |
-| Graph/DAG | ✅ | - | ✅ | - |
-| Hierarchical | ✅ | ✅ | ✅ | ✅ |
-| A2A Protocol | ✅ | - | - | - |
+| Pattern | Google ADK | Strands | CrewAI | LangGraph | pi-agent-core |
+|---------|-----------|---------|--------|-----------|---------------|
+| Agents as Tools | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Swarm | ✅ | ✅ | - | ✅ | - |
+| Graph/DAG | ✅ | ✅ | - | ✅ | - |
+| Hierarchical | ✅ | ✅ | ✅ | ✅ | ✅ |
+| A2A Protocol | ✅ | ✅ | - | - | - |
 
 ---
 
@@ -556,12 +505,12 @@ All frameworks use similar tool schemas:
 
 {{< mermaid >}}
 flowchart TB
-    START[Need an Agent Framework?] --> Q1{Multi-channel<br/>messaging?}
-    Q1 -->|Yes| OC[pi-agent-core/OpenClaw]
-    Q1 -->|No| Q2{AWS native?}
-    Q2 -->|Yes| STR[AWS Strands]
-    Q2 -->|No| Q3{GCP native?}
-    Q3 -->|Yes| ADK[Google ADK]
+    START[Need an Agent Framework?] --> Q1{Need full<br/>protocol support?}
+    Q1 -->|Yes, A2A/MCP/AG-UI| ADK[Google ADK]
+    Q1 -->|No| Q2{Multi-channel<br/>messaging?}
+    Q2 -->|Yes| OC[pi-agent-core/OpenClaw]
+    Q2 -->|No| Q3{AWS native?}
+    Q3 -->|Yes| STR[AWS Strands]
     Q3 -->|No| Q4{Complex workflows?}
     Q4 -->|Yes| LG[LangGraph]
     Q4 -->|No| Q5{Multi-agent teams?}
@@ -571,33 +520,37 @@ flowchart TB
 
 ### Recommendations
 
-| Use Case | Recommended Framework |
-|----------|----------------------|
-| Personal AI assistant (multi-channel) | pi-agent-core/OpenClaw |
-| AWS enterprise deployment | AWS Strands + AgentCore |
-| GCP enterprise deployment | Google ADK |
-| Custom complex workflows | LangGraph |
-| Autonomous research teams | CrewAI |
-| Type-safe simple agents | Pydantic AI |
-| Learning/prototyping | Pydantic AI or LangGraph |
+| Use Case | Recommended Framework | Why |
+|----------|----------------------|-----|
+| Full protocol stack (A2A, MCP, AG-UI) | **Google ADK** | Created many protocols, best support |
+| Personal AI assistant (multi-channel) | **pi-agent-core/OpenClaw** | Best channel coverage |
+| AWS enterprise deployment | **AWS Strands + AgentCore** | Native AWS integration |
+| Custom complex workflows | **LangGraph** | Maximum flexibility |
+| Autonomous research teams | **CrewAI** | Multi-agent abstractions |
+| Type-safe simple agents | **Pydantic AI** | Clean, minimal API |
+| Real-time voice/video agents | **Google ADK** | Bidi-streaming support |
 
 ---
 
 ## Conclusion
 
-The agentic framework landscape is converging on common patterns while differentiating on:
+The agentic framework landscape is maturing rapidly, with clear differentiation emerging:
 
-1. **Abstraction level** — High (OpenClaw, CrewAI) vs Low (LangGraph)
-2. **Cloud integration** — AWS (Strands), GCP (ADK), agnostic (others)
-3. **Session sophistication** — Full lifecycle (OpenClaw, LangGraph) vs basic (Pydantic AI)
-4. **Memory architecture** — Workspace files (OpenClaw), RAG layers (CrewAI), checkpoints (LangGraph)
-5. **Multi-agent support** — Built-in (Strands, CrewAI) vs compose yourself (others)
+1. **Protocol Leadership** — Google ADK leads with comprehensive support for A2A, MCP, AG-UI, and UCP (protocols they helped create)
+2. **Channel Coverage** — pi-agent-core/OpenClaw excels at multi-channel messaging (WhatsApp, Telegram, Discord, etc.)
+3. **Cloud Integration** — AWS Strands for AWS, Google ADK for GCP
+4. **Workflow Flexibility** — LangGraph offers the most control over agent behavior
+5. **Memory Sophistication** — All major frameworks now offer robust session and memory systems
 
-**For production AI agents** that need multi-channel messaging, sophisticated session management, and workspace-based memory, **pi-agent-core (OpenClaw)** offers the most complete solution. For **AWS-native deployments**, **Strands** with AgentCore Runtime provides excellent integration. For **maximum control** over agent behavior, **LangGraph** remains the gold standard.
+**The right choice depends on your priorities:**
+- Need full protocol interoperability? → **Google ADK**
+- Need to reach users on WhatsApp/Telegram? → **pi-agent-core**
+- Deep in AWS ecosystem? → **Strands**
+- Want maximum control? → **LangGraph**
 
 ---
 
-*This comparison reflects the state of these frameworks as of February 2026. The agentic AI space evolves rapidly.*
+*This comparison reflects the state of these frameworks as of February 2026. The agentic AI space evolves rapidly — always check the latest docs.*
 
 {{< badge >}}
 Written by Amine El Farssi — Building production AI agents at KBC
