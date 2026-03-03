@@ -136,7 +136,7 @@ The “right” choice depends on:
 - **Safety controls** (prompt-injection defenses, allow-listed tools, policy checks)
 - **Failure handling** (timeouts, circuit breakers, retries, idempotency keys)
 
-## References (from your draft)
+## References
 
 - AG‑UI protocol overview: `https://docs.ag-ui.com/agentic-protocols`
 - A2UI intro: `https://a2ui.sh/articles/introduction-to-a2ui`
