@@ -53,75 +53,43 @@ Building production AI agents requires choosing the right framework. This analys
 
 ### Protocol Deep Dives (Video Series)
 
-Six protocols, 60 seconds each. Embedded below — click play to watch.
-
-<style>
-.short-container {
-  position: relative;
-  width: 100%;
-  padding-bottom: 177.78%;
-  height: 0;
-  overflow: hidden;
-  border-radius: 12px;
-  background: #000;
-}
-.short-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-</style>
+Six protocols, 60 seconds each. Click play to watch.
 
 <div class="grid grid-cols-2 md:grid-cols-3 gap-4 my-6">
 
 <div>
   <p class="font-bold text-center mb-2 text-sm">🔵 MCP</p>
-  <div class="short-container">
-    <iframe src="https://www.youtube.com/embed/nsVnwjaIKx8" title="MCP Explained" allowfullscreen></iframe>
-  </div>
+  {{< short nsVnwjaIKx8 "MCP Explained" >}}
   <p class="text-xs text-gray-600 text-center mt-1">Model Context Protocol</p>
 </div>
 
 <div>
   <p class="font-bold text-center mb-2 text-sm">🟢 A2A</p>
-  <div class="short-container">
-    <iframe src="https://www.youtube.com/embed/3ypCZG7okmE" title="A2A Explained" allowfullscreen></iframe>
-  </div>
+  {{< short 3ypCZG7okmE "A2A Explained" >}}
   <p class="text-xs text-gray-600 text-center mt-1">Agent-to-Agent Protocol</p>
 </div>
 
 <div>
   <p class="font-bold text-center mb-2 text-sm">🟡 UCP</p>
-  <div class="short-container">
-    <iframe src="https://www.youtube.com/embed/4nTOfya_KAg" title="UCP Explained" allowfullscreen></iframe>
-  </div>
+  {{< short 4nTOfya_KAg "UCP Explained" >}}
   <p class="text-xs text-gray-600 text-center mt-1">Universal Commerce Protocol</p>
 </div>
 
 <div>
   <p class="font-bold text-center mb-2 text-sm">🟣 AG-UI</p>
-  <div class="short-container">
-    <iframe src="https://www.youtube.com/embed/aB8F5scVa7Y" title="AG-UI Explained" allowfullscreen></iframe>
-  </div>
+  {{< short aB8F5scVa7Y "AG-UI Explained" >}}
   <p class="text-xs text-gray-600 text-center mt-1">Agent-to-User Interface</p>
 </div>
 
 <div>
   <p class="font-bold text-center mb-2 text-sm">🟠 TAP</p>
-  <div class="short-container">
-    <iframe src="https://www.youtube.com/embed/-3i0aReEuIE" title="TAP Explained" allowfullscreen></iframe>
-  </div>
+  {{< short -3i0aReEuIE "TAP Explained" >}}
   <p class="text-xs text-gray-600 text-center mt-1">Trusted Agent Protocol</p>
 </div>
 
 <div>
   <p class="font-bold text-center mb-2 text-sm">🔴 AP2 (ACP)</p>
-  <div class="short-container">
-    <iframe src="https://www.youtube.com/embed/vBjK4tbDgNk" title="AP2 Explained" allowfullscreen></iframe>
-  </div>
+  {{< short vBjK4tbDgNk "AP2 Explained" >}}
   <p class="text-xs text-gray-600 text-center mt-1">Agent Payment / Commerce Protocol</p>
 </div>
 
