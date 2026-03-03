@@ -37,7 +37,3 @@ enableEmoji = true
   [[related.indices]]
     name = "date"
     weight = 10
-
-# Enable raw HTML in markdown (needed for YouTube Shorts embeds)
-[markup.goldmark.renderer]
-unsafe = true

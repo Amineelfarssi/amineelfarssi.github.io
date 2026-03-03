@@ -1,16 +1,2 @@
-# Markup settings required for the theme
-
-[goldmark]
-  [goldmark.parser]
-    wrapStandAloneImageWithinParagraph = false
-    [goldmark.parser.attribute]
-      block = true
-  [goldmark.renderer]
-    unsafe = true
-
-[highlight]
-  noClasses = false
-
-[tableOfContents]
-  startLevel = 2
-  endLevel = 4
+[goldmark.renderer]
+unsafe = true
