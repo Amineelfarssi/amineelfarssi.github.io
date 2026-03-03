@@ -55,10 +55,7 @@ Building production AI agents requires choosing the right framework. This analys
 
 Six protocols, 60 seconds each. Embedded below — click play to watch.
 
-<!--
-TODO: Replace VIDEO_ID_XXX with your actual YouTube Shorts IDs.
-Get the ID from the URL: https://www.youtube.com/shorts/VIDEO_ID
--->
+<!-- YouTube Shorts embedded below -->
 
 <style>
 .short-container {
@@ -86,9 +83,9 @@ Get the ID from the URL: https://www.youtube.com/shorts/VIDEO_ID
 <div>
   <p class="font-bold text-center mb-2 text-sm">🔵 MCP</p>
   <div class="short-container">
-    <iframe src="https://www.youtube.com/embed/VIDEO_ID_MCP" 
-            title="MCP Explained" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    <iframe src="https://www.youtube.com/embed/nsVnwjaIKx8"
+            title="MCP Explained"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen>
     </iframe>
   </div>
@@ -99,9 +96,9 @@ Get the ID from the URL: https://www.youtube.com/shorts/VIDEO_ID
 <div>
   <p class="font-bold text-center mb-2 text-sm">🟢 A2A</p>
   <div class="short-container">
-    <iframe src="https://www.youtube.com/embed/VIDEO_ID_A2A" 
-            title="A2A Explained" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    <iframe src="https://www.youtube.com/embed/3ypCZG7okmE"
+            title="A2A Explained"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen>
     </iframe>
   </div>
@@ -112,9 +109,9 @@ Get the ID from the URL: https://www.youtube.com/shorts/VIDEO_ID
 <div>
   <p class="font-bold text-center mb-2 text-sm">🟡 UCP</p>
   <div class="short-container">
-    <iframe src="https://www.youtube.com/embed/VIDEO_ID_UCP" 
-            title="UCP Explained" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    <iframe src="https://www.youtube.com/embed/4nTOfya_KAg"
+            title="UCP Explained"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen>
     </iframe>
   </div>
@@ -125,9 +122,9 @@ Get the ID from the URL: https://www.youtube.com/shorts/VIDEO_ID
 <div>
   <p class="font-bold text-center mb-2 text-sm">🟣 AG-UI</p>
   <div class="short-container">
-    <iframe src="https://www.youtube.com/embed/VIDEO_ID_AGUI" 
-            title="AG-UI Explained" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    <iframe src="https://www.youtube.com/embed/aB8F5scVa7Y"
+            title="AG-UI Explained"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen>
     </iframe>
   </div>
@@ -138,32 +135,32 @@ Get the ID from the URL: https://www.youtube.com/shorts/VIDEO_ID
 <div>
   <p class="font-bold text-center mb-2 text-sm">🟠 TAP</p>
   <div class="short-container">
-    <iframe src="https://www.youtube.com/embed/VIDEO_ID_TAP" 
-            title="TAP Explained" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    <iframe src="https://www.youtube.com/embed/-3i0aReEuIE"
+            title="TAP Explained"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen>
     </iframe>
   </div>
   <p class="text-xs text-gray-600 text-center mt-1">Trusted Agent Protocol</p>
 </div>
 
-<!-- AP2 -->
+<!-- AP2 / ACP -->
 <div>
-  <p class="font-bold text-center mb-2 text-sm">🔴 AP2</p>
+  <p class="font-bold text-center mb-2 text-sm">🔴 AP2 (ACP)</p>
   <div class="short-container">
-    <iframe src="https://www.youtube.com/embed/VIDEO_ID_AP2" 
-            title="AP2 Explained" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    <iframe src="https://www.youtube.com/embed/vBjK4tbDgNk"
+            title="AP2 / ACP Explained"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen>
     </iframe>
   </div>
-  <p class="text-xs text-gray-600 text-center mt-1">Agent Payment Protocol</p>
+  <p class="text-xs text-gray-600 text-center mt-1">Agent Payment / Commerce Protocol</p>
 </div>
 
 </div>
 
-{{< alert icon="info" cardColor="#f59e0b" iconColor="#fff" textColor="#fff" >}}
-**To activate embeds:** Replace `VIDEO_ID_XXX` with your actual YouTube Shorts IDs (the part after `/shorts/` in the URL). Example: `dQw4w9WgXcQ`
+{{< alert icon="check" cardColor="#10b981" iconColor="#fff" textColor="#fff" >}}
+**All 6 protocol videos embedded above.** Click play to watch the 60-second explainers.
 {{< /alert >}}
 
 The [DPO channel](https://www.youtube.com/@dpo-k8s) uses Manim animations + local TTS — zero production cost, fully automated pipeline. See [YouTube Channel for $0](/blog/youtube-channel-zero-cost-pipeline/) for how it's built.
