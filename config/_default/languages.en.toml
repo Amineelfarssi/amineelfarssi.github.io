@@ -17,5 +17,6 @@ title = "Amine El Farssi"
   links = [
     { github = "https://github.com/Amineelfarssi" },
     { linkedin = "https://www.linkedin.com/in/amine-el-farssi/" },
+    { twitter = "https://x.com/amineelfarssi" },
     { email = "mailto:your.email@example.com" },
   ]
