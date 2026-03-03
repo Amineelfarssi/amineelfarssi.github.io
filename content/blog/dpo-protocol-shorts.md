@@ -1,8 +1,8 @@
 ---
 title: "AI Agent Protocols Explained in 60 Seconds"
 date: 2026-03-03
-description: "MCP, A2A, UCP, AG-UI, TAP, AP2 — each explained in 60 seconds with Manim animations. Six Shorts from the DPO channel."
-tags: ["AI Agents", "MCP", "A2A", "UCP", "AG-UI", "Protocols", "YouTube"]
+description: "Programmatic Tool Calling, A2A, UCP, AG-UI, MCP, ACP — each explained in 60 seconds with Manim animations. Six Shorts from the DPO channel."
+tags: ["AI Agents", "MCP", "A2A", "UCP", "AG-UI", "ACP", "Protocols", "YouTube"]
 categories: ["Video"]
 showTableOfContents: false
 showReadingTime: false
@@ -19,13 +19,13 @@ These are the protocols shaping how AI agents discover services, talk to each ot
 
 ---
 
-## 🔵 MCP — Model Context Protocol
+## 🔵 Programmatic Tool Calling
 
-*By Anthropic. The "USB-C for AI tools."*
+*By Anthropic. How LLMs use tools.*
 
-Standardizes how LLMs discover and call tools, access resources, and receive structured prompts. Now the de facto standard — adopted by Google, OpenAI, Cursor, and the broader ecosystem.
+The foundation of agentic AI — how a language model decides to call an external function, what parameters to pass, and how to handle the result. The building block everything else is built on.
 
-{{< short id="nsVnwjaIKx8" title="MCP Explained in 60 Seconds" >}}
+{{< short id="nsVnwjaIKx8" title="Programmatic Tool Calling" >}}
 
 ---
 
@@ -59,13 +59,13 @@ A transport protocol for streaming partial results, tool outputs, and UI state u
 
 ---
 
-## 🟠 TAP — Trusted Agent Protocol
+## 🔵 MCP — Model Context Protocol
 
-*By Visa. Agent identity and trust scoring.*
+*By Anthropic. The "USB-C for AI tools."*
 
-Before an agent can act on your behalf (pay, book, submit), services need to know who's asking. TAP defines how agents register identity, declare capabilities, and earn trust scores.
+Standardizes how LLMs discover and call tools, access resources, and receive structured prompts. Now the de facto standard — adopted by Google, OpenAI, Cursor, and the broader ecosystem.
 
-{{< short id="-3i0aReEuIE" title="TAP Explained in 60 Seconds" >}}
+{{< short id="vBjK4tbDgNk" title="MCP Explained in 60 Seconds" >}}
 
 ---
 
@@ -75,7 +75,7 @@ Before an agent can act on your behalf (pay, book, submit), services need to kno
 
 Defines how agents request payment authorization from users, store mandates, and trigger recurring or conditional payments — without interrupting the agent's flow for every transaction.
 
-{{< short id="vBjK4tbDgNk" title="ACP Explained in 60 Seconds" >}}
+{{< short id="-3i0aReEuIE" title="ACP Explained in 60 Seconds" >}}
 
 ---
 
