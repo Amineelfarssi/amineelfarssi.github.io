@@ -389,13 +389,13 @@ github-skill/
 
 {{< mermaid >}}
 flowchart TB
-    Q[User: "Create a PR for this fix"]
-    
+    Q["User: Create a PR for this fix"]
+
     Q --> SCAN[Scan available skills]
-    SCAN --> MATCH{Matches<br/>github skill?}
+    SCAN --> MATCH{Matches github skill?}
     MATCH -->|Yes| LOAD[Load SKILL.md]
-    LOAD --> EXEC[Execute with<br/>skill knowledge]
-    
+    LOAD --> EXEC[Execute with skill knowledge]
+
     MATCH -->|No| DEFAULT[Use base knowledge]
 {{< /mermaid >}}
 
