@@ -53,114 +53,19 @@ Building production AI agents requires choosing the right framework. This analys
 
 ### Protocol Deep Dives (Video Series)
 
-Six protocols, 60 seconds each. Embedded below — click play to watch.
+Six protocols, 60 seconds each. Click any video to watch.
 
-<!-- YouTube Shorts embedded below -->
+| Protocol | Video | Description |
+|----------|-------|-------------|
+| 🔵 **MCP** | [Watch on YouTube](https://www.youtube.com/shorts/nsVnwjaIKx8) | Model Context Protocol — the "USB-C for AI tools" |
+| 🟢 **A2A** | [Watch on YouTube](https://www.youtube.com/shorts/3ypCZG7okmE) | Agent-to-Agent protocol by Google |
+| 🟡 **UCP** | [Watch on YouTube](https://www.youtube.com/shorts/4nTOfya_KAg) | Universal Commerce Protocol for agent shopping |
+| 🟣 **AG-UI** | [Watch on YouTube](https://www.youtube.com/shorts/aB8F5scVa7Y) | Agent-to-User streaming interface |
+| 🟠 **TAP** | [Watch on YouTube](https://www.youtube.com/shorts/-3i0aReEuIE) | Visa's Trusted Agent identity framework |
+| 🔴 **AP2/ACP** | [Watch on YouTube](https://www.youtube.com/shorts/vBjK4tbDgNk) | Agent Payment / Commerce Protocol |
 
-<style>
-.short-container {
-  position: relative;
-  width: 100%;
-  padding-bottom: 177.78%; /* 9:16 aspect ratio for Shorts */
-  height: 0;
-  overflow: hidden;
-  border-radius: 12px;
-  background: #000;
-}
-.short-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-</style>
-
-<div class="grid grid-cols-2 md:grid-cols-3 gap-4 my-6">
-
-<!-- MCP -->
-<div>
-  <p class="font-bold text-center mb-2 text-sm">🔵 MCP</p>
-  <div class="short-container">
-    <iframe src="https://www.youtube.com/embed/nsVnwjaIKx8"
-            title="MCP Explained"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-    </iframe>
-  </div>
-  <p class="text-xs text-gray-600 text-center mt-1">Model Context Protocol</p>
-</div>
-
-<!-- A2A -->
-<div>
-  <p class="font-bold text-center mb-2 text-sm">🟢 A2A</p>
-  <div class="short-container">
-    <iframe src="https://www.youtube.com/embed/3ypCZG7okmE"
-            title="A2A Explained"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-    </iframe>
-  </div>
-  <p class="text-xs text-gray-600 text-center mt-1">Agent-to-Agent Protocol</p>
-</div>
-
-<!-- UCP -->
-<div>
-  <p class="font-bold text-center mb-2 text-sm">🟡 UCP</p>
-  <div class="short-container">
-    <iframe src="https://www.youtube.com/embed/4nTOfya_KAg"
-            title="UCP Explained"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-    </iframe>
-  </div>
-  <p class="text-xs text-gray-600 text-center mt-1">Universal Commerce Protocol</p>
-</div>
-
-<!-- AG-UI -->
-<div>
-  <p class="font-bold text-center mb-2 text-sm">🟣 AG-UI</p>
-  <div class="short-container">
-    <iframe src="https://www.youtube.com/embed/aB8F5scVa7Y"
-            title="AG-UI Explained"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-    </iframe>
-  </div>
-  <p class="text-xs text-gray-600 text-center mt-1">Agent-to-User Interface</p>
-</div>
-
-<!-- TAP -->
-<div>
-  <p class="font-bold text-center mb-2 text-sm">🟠 TAP</p>
-  <div class="short-container">
-    <iframe src="https://www.youtube.com/embed/-3i0aReEuIE"
-            title="TAP Explained"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-    </iframe>
-  </div>
-  <p class="text-xs text-gray-600 text-center mt-1">Trusted Agent Protocol</p>
-</div>
-
-<!-- AP2 / ACP -->
-<div>
-  <p class="font-bold text-center mb-2 text-sm">🔴 AP2 (ACP)</p>
-  <div class="short-container">
-    <iframe src="https://www.youtube.com/embed/vBjK4tbDgNk"
-            title="AP2 / ACP Explained"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-    </iframe>
-  </div>
-  <p class="text-xs text-gray-600 text-center mt-1">Agent Payment / Commerce Protocol</p>
-</div>
-
-</div>
-
-{{< alert icon="check" cardColor="#10b981" iconColor="#fff" textColor="#fff" >}}
-**All 6 protocol videos embedded above.** Click play to watch the 60-second explainers.
+{{< alert icon="play-circle" cardColor="#dc2626" iconColor="#fff" textColor="#fff" >}}
+🎬 **Prefer embedded players?** The [DPO YouTube channel](https://www.youtube.com/@dpo-k8s) has all 6 Shorts. Raw HTML embeds were stripped by the site's markdown renderer — if you want inline players, the theme needs a custom shortcode for YouTube Shorts (9:16 aspect ratio).
 {{< /alert >}}
 
 The [DPO channel](https://www.youtube.com/@dpo-k8s) uses Manim animations + local TTS — zero production cost, fully automated pipeline. See [YouTube Channel for $0](/blog/youtube-channel-zero-cost-pipeline/) for how it's built.
