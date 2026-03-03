@@ -2,7 +2,7 @@
 title: "PostSingular: Building an AI with Persistent Identity Across Sessions"
 date: 2026-03-02
 description: "Every AI session starts blank. Here's the memory architecture that gives an AI agent continuity, personality, and the ability to recall decisions made weeks ago."
-tags: ["AI Agents", "Memory", "Identity", "OpenClaw", "Personal AI"]
+tags: ["AI Agents", "Memory", "Identity", "OpenClaw", "Neo4j", "ChromaDB"]
 categories: ["Engineering"]
 showTableOfContents: true
 showReadingTime: true
@@ -28,26 +28,26 @@ What I wanted was an AI that could answer: "What did we decide about the auth sy
 
 {{< mermaid >}}
 graph TD
-    SOUL["🌟 SOUL.md\nPersonality, values, vibe"]
-    USER["👤 USER.md\nWho Amine is, preferences"]
-    MEMORY["🧠 MEMORY.md\n~500 lines of curated facts\nLong-term memory"]
-    DAILY["📅 memory/YYYY-MM-DD.md\nRaw daily notes\nShort-term log"]
-    KG["🗄️ Neo4j KG\nEntities + relationships\nTemporal facts"]
-    CHROMA["🔍 ChromaDB\nSemantic vectors\n162 chunks"]
-    
-    SOUL --> SESSION["⚡ Session Start\nAgent reads all context files"]
+    SOUL["🌟 SOUL.md<br/>Personality, values, vibe"]
+    USER["👤 USER.md<br/>Who Amine is, preferences"]
+    MEMORY["🧠 MEMORY.md<br/>~500 lines of curated facts<br/>Long-term memory"]
+    DAILY["📅 memory/YYYY-MM-DD.md<br/>Raw daily notes<br/>Short-term log"]
+    KG["🗄️ Neo4j KG<br/>Entities + relationships<br/>Temporal facts"]
+    CHROMA["🔍 ChromaDB<br/>Semantic vectors<br/>162 chunks"]
+
+    SOUL --> SESSION["⚡ Session Start<br/>Agent reads all context files"]
     USER --> SESSION
     MEMORY --> SESSION
     DAILY --> SESSION
-    
-    SESSION --> WORK["Work, conversation,\ntools, decisions"]
-    WORK --> APPEND["📝 Append to today's\ndaily notes"]
-    WORK --> UPDATE["Update MEMORY.md\nfor significant events"]
-    
+
+    SESSION --> WORK["Work, conversation,<br/>tools, decisions"]
+    WORK --> APPEND["📝 Append to today's<br/>daily notes"]
+    WORK --> UPDATE["Update MEMORY.md<br/>for significant events"]
+
     CRON["⏰ 2 AM Cron"] --> KG
     DAILY --> CRON
     MEMORY --> CRON
-    KG --> QUERY["🔍 memory_search()\nRFF across all stores"]
+    KG --> QUERY["🔍 memory_search()<br/>RRF across all stores"]
     CHROMA --> QUERY
     DAILY --> QUERY
     style SESSION fill:#1e3a5f,color:#fff
@@ -66,15 +66,121 @@ graph TD
 
 ```markdown
 ## Infrastructure — Gaming Server
-- **Hostname**: amine-MS-7B17
-- **Tailscale IP**: 100.x.y.z
+- **Hostname**: my-gaming-pc
 - **CPU**: Intel i5-9600K 6C/6T @ 3.7GHz
 - **RAM**: 64GB
 - **GPU**: RTX 2080 Ti (11GB VRAM)
-- **Tailscale SSH permanently fixed**: ACL changed from check to accept
+- **Remote access**: Tailscale with SSH (key-based, no password prompts)
+- **OpenClaw gateway**: loopback bind, exposed via Tailscale Serve over HTTPS
 ```
 
 **memory/YYYY-MM-DD.md** — Raw daily notes. The agent appends to today's file throughout the session. No curation, just capture. These get ingested into the KG nightly and eventually reviewed for what's worth promoting to MEMORY.md.
+
+---
+
+## Why Two Stores? Neo4j + ChromaDB
+
+This is the part most write-ups skip. "Use a vector database" is the common advice. I use two stores, and they do fundamentally different things.
+
+### The problem with vector search alone
+
+Vector databases (ChromaDB, Pinecone, Weaviate) are great at semantic similarity. Ask "what database do we use?" and a well-chunked vector store will surface relevant passages.
+
+But they can't answer structural questions:
+- *"Which agent is working on which issue?"*
+- *"What decisions did we make in Sprint 7?"*
+- *"Who reviewed PR #61, and what did they flag?"*
+
+These are **relationship queries**, not similarity queries. Embeddings don't encode "Lumi reviewed PR #61 and flagged two issues." They encode the general topic of code review.
+
+### Why a knowledge graph (Neo4j)
+
+A knowledge graph stores the world as **entities and edges**:
+
+```
+(Lumi) --[REVIEWED]--> (PR #61)
+(PR #61) --[FIXES]--> (LUM-58)
+(LUM-58) --[IN_SPRINT]--> (Sprint 8)
+(Sprint 8) --[OWNED_BY]--> (Forge)
+```
+
+Each edge is typed and timestamped. Now "who reviewed what, when, and what did they find?" is a graph traversal, not a similarity search. The answer is precise, not probabilistic.
+
+Neo4j specifically because:
+- Mature, battle-tested, excellent Python driver
+- Cypher query language is readable and expressive
+- Docker image, 7GB RAM max, runs fine on a gaming server
+
+I use [Graphiti](https://github.com/getzep/graphiti) as the extraction layer — it takes free-form text, calls an LLM to extract entities and relationships, and writes them to Neo4j with temporal metadata. I don't write graph nodes manually.
+
+### Why still keep ChromaDB
+
+Graph search requires you to know what entities exist. Semantic search doesn't — it works on fuzzy, freeform queries. If I ask "what were we worried about last week?" I don't know which entity to look up. A vector search across the daily notes surfaces the relevant chunks.
+
+The two stores complement each other:
+
+| | Neo4j (Graph) | ChromaDB (Vectors) |
+|---|---|---|
+| **Best for** | Precise facts, relationships, chains | Fuzzy recall, topic search |
+| **Query type** | "Who worked on X?" | "What were we discussing around X?" |
+| **Input** | Structured extraction via LLM | Chunked text, embedded directly |
+| **Precision** | High — traversal answers | Medium — top-k similarity |
+
+The `memory_search()` tool runs both and merges results with [RRF (Reciprocal Rank Fusion)](https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf) — a technique for combining ranked lists from multiple sources without needing calibrated scores.
+
+---
+
+## How Ingestion Actually Works
+
+A cron job runs at 2 AM every night. Here's what it does:
+
+```python
+# Simplified version of kg/daily-ingest.sh
+for file in yesterday_notes, memory_md:
+    chunks = split_into_paragraphs(file)
+    for chunk in chunks:
+        # Graphiti calls Kimi K2 Turbo to extract entities + relationships
+        await graphiti.add_episode(
+            name=f"{date}_{file}",
+            episode_body=chunk,
+            source_description="daily_notes"
+        )
+        # ChromaDB: embed + store directly
+        chroma_collection.add(documents=[chunk], ids=[chunk_id])
+```
+
+**Graphiti** handles the heavy lifting: it sends each chunk to an LLM, asks it to extract a JSON of entities (`{name, type, summary}`) and relationships (`{subject, predicate, object}`), then writes them to Neo4j. The LLM doesn't need to be smart — it just needs to be reliable at structured extraction.
+
+For a typical day (18 chunks from daily notes + MEMORY.md diff), the ingestion takes about 4 minutes.
+
+### What gets extracted from a note like this:
+
+```
+Sprint 14 kicked off. Bolt is working on LUM-97 (API key auth).
+Forge opened ADR-018 covering the Railway deploy architecture.
+```
+
+Graphiti extracts:
+- **Entities**: `Sprint 14`, `Bolt`, `LUM-97`, `Forge`, `ADR-018`, `Railway`
+- **Relationships**: `Bolt → WORKS_ON → LUM-97`, `Forge → AUTHORED → ADR-018`, `ADR-018 → COVERS → Railway deploy`
+
+Over time, this builds a queryable map of the entire project — who did what, when, and in what context.
+
+---
+
+## The Real Cost
+
+This is the part I was most pleasantly surprised by.
+
+**LLM for extraction**: I use **Kimi K2 Turbo** (Moonshot AI) at ~$0.01 per 1K tokens. A typical nightly ingest processes ~18 chunks × ~300 tokens each = ~5,400 tokens. That's **$0.054 per night**, or roughly **$1.60/month**.
+
+**Embedder**: `all-MiniLM-L6-v2` running on CPU via sentence-transformers. Free, fast, 384-dim embeddings. Runs in <1 second per chunk.
+
+**Infrastructure**: Neo4j in Docker on my gaming server. Already running, zero additional cost.
+
+**Total**: Under $2/month for a fully operational knowledge graph + vector store with nightly automated ingestion.
+
+The only real cost is the Graphiti + Neo4j setup time (a few hours). Once it's running, it's autonomous.
 
 ---
 
@@ -110,7 +216,7 @@ This creates **proactive behavior**: the agent doesn't just respond to requests,
 
 **Longitudinal context.** "What were we doing on Sprint 7?" is answerable via the daily notes and KG. The KG has entities like "Sprint 7" connected to issues, decisions, and outcomes.
 
-**Identity continuity.** PostSingular remembers being renamed on 2026-02-08 mid-gym-session. It remembers the conversation about consolidating to the gaming server. It remembers that Lumi's communication was broken for weeks before we noticed. This history shapes how the agent reasons about current decisions.
+**Identity continuity.** PostSingular remembers being renamed mid-gym-session. It remembers the conversation about consolidating to the gaming server. It remembers that Lumi's communication was broken for weeks before we noticed. This history shapes how the agent reasons about current decisions.
 
 ---
 
