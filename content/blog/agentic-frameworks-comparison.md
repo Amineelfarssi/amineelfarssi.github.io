@@ -53,47 +53,18 @@ Building production AI agents requires choosing the right framework. This analys
 
 ### Protocol Deep Dives (Video Series)
 
-Six protocols, 60 seconds each. Click play to watch.
+Six protocols, 60 seconds each. Click any video to watch on YouTube.
 
-<div class="grid grid-cols-2 md:grid-cols-3 gap-4 my-6">
+| Protocol | Video | Description |
+|----------|-------|-------------|
+| 🔵 **MCP** | [Watch on YouTube](https://www.youtube.com/shorts/nsVnwjaIKx8) | Model Context Protocol — the "USB-C for AI tools" |
+| 🟢 **A2A** | [Watch on YouTube](https://www.youtube.com/shorts/3ypCZG7okmE) | Agent-to-Agent protocol by Google |
+| 🟡 **UCP** | [Watch on YouTube](https://www.youtube.com/shorts/4nTOfya_KAg) | Universal Commerce Protocol for agent shopping |
+| 🟣 **AG-UI** | [Watch on YouTube](https://www.youtube.com/shorts/aB8F5scVa7Y) | Agent-to-User streaming interface |
+| 🟠 **TAP** | [Watch on YouTube](https://www.youtube.com/shorts/-3i0aReEuIE) | Visa's Trusted Agent identity framework |
+| 🔴 **AP2/ACP** | [Watch on YouTube](https://www.youtube.com/shorts/vBjK4tbDgNk) | Agent Payment / Commerce Protocol |
 
-<div>
-  <p class="font-bold text-center mb-2 text-sm">🔵 MCP</p>
-  {{< short nsVnwjaIKx8 "MCP Explained" >}}
-  <p class="text-xs text-gray-600 text-center mt-1">Model Context Protocol</p>
-</div>
-
-<div>
-  <p class="font-bold text-center mb-2 text-sm">🟢 A2A</p>
-  {{< short 3ypCZG7okmE "A2A Explained" >}}
-  <p class="text-xs text-gray-600 text-center mt-1">Agent-to-Agent Protocol</p>
-</div>
-
-<div>
-  <p class="font-bold text-center mb-2 text-sm">🟡 UCP</p>
-  {{< short 4nTOfya_KAg "UCP Explained" >}}
-  <p class="text-xs text-gray-600 text-center mt-1">Universal Commerce Protocol</p>
-</div>
-
-<div>
-  <p class="font-bold text-center mb-2 text-sm">🟣 AG-UI</p>
-  {{< short aB8F5scVa7Y "AG-UI Explained" >}}
-  <p class="text-xs text-gray-600 text-center mt-1">Agent-to-User Interface</p>
-</div>
-
-<div>
-  <p class="font-bold text-center mb-2 text-sm">🟠 TAP</p>
-  {{< short -3i0aReEuIE "TAP Explained" >}}
-  <p class="text-xs text-gray-600 text-center mt-1">Trusted Agent Protocol</p>
-</div>
-
-<div>
-  <p class="font-bold text-center mb-2 text-sm">🔴 AP2 (ACP)</p>
-  {{< short vBjK4tbDgNk "AP2 Explained" >}}
-  <p class="text-xs text-gray-600 text-center mt-1">Agent Payment / Commerce Protocol</p>
-</div>
-
-</div>
+The [DPO channel](https://www.youtube.com/@dpo-k8s) uses Manim animations + local TTS — zero production cost, fully automated pipeline. See [YouTube Channel for $0](/blog/youtube-channel-zero-cost-pipeline/) for how it's built.
 
 The [DPO channel](https://www.youtube.com/@dpo-k8s) uses Manim animations + local TTS — zero production cost, fully automated pipeline. See [YouTube Channel for $0](/blog/youtube-channel-zero-cost-pipeline/) for how it's built.
 
