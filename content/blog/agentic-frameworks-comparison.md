@@ -57,44 +57,13 @@ Building production AI agents requires choosing the right framework. This analys
 
 Six protocols, 60 seconds each. All from the [DPO channel](https://www.youtube.com/@dpo-k8s).
 
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:24px 0;">
-
-<div>
-<p style="font-weight:bold;text-align:center;margin-bottom:8px;">🔵 MCP</p>
-{{< short id="nsVnwjaIKx8" title="MCP Explained" >}}
-<p style="font-size:0.75rem;text-align:center;">Model Context Protocol</p>
-</div>
-
-<div>
-<p style="font-weight:bold;text-align:center;margin-bottom:8px;">🟢 A2A</p>
-{{< short id="3ypCZG7okmE" title="A2A Explained" >}}
-<p style="font-size:0.75rem;text-align:center;">Agent-to-Agent Protocol</p>
-</div>
-
-<div>
-<p style="font-weight:bold;text-align:center;margin-bottom:8px;">🟡 UCP</p>
-{{< short id="4nTOfya_KAg" title="UCP Explained" >}}
-<p style="font-size:0.75rem;text-align:center;">Universal Commerce Protocol</p>
-</div>
-
-<div>
-<p style="font-weight:bold;text-align:center;margin-bottom:8px;">🟣 AG-UI</p>
-{{< short id="aB8F5scVa7Y" title="AG-UI Explained" >}}
-<p style="font-size:0.75rem;text-align:center;">Agent-to-User Interface</p>
-</div>
-
-<div>
-<p style="font-weight:bold;text-align:center;margin-bottom:8px;">🟠 TAP</p>
-{{< short id="-3i0aReEuIE" title="TAP Explained" >}}
-<p style="font-size:0.75rem;text-align:center;">Trusted Agent Protocol</p>
-</div>
-
-<div>
-<p style="font-weight:bold;text-align:center;margin-bottom:8px;">🔴 AP2 / ACP</p>
-{{< short id="vBjK4tbDgNk" title="AP2 Explained" >}}
-<p style="font-size:0.75rem;text-align:center;">Agent Payment Protocol</p>
-</div>
-
+<div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin:24px 0;">
+  <div style="text-align:center;">🔵 MCP<br>{{< short id="nsVnwjaIKx8" title="MCP Explained" >}}<small>Model Context Protocol</small></div>
+  <div style="text-align:center;">🟢 A2A<br>{{< short id="3ypCZG7okmE" title="A2A Explained" >}}<small>Agent-to-Agent Protocol</small></div>
+  <div style="text-align:center;">🟡 UCP<br>{{< short id="4nTOfya_KAg" title="UCP Explained" >}}<small>Universal Commerce Protocol</small></div>
+  <div style="text-align:center;">🟣 AG-UI<br>{{< short id="aB8F5scVa7Y" title="AG-UI Explained" >}}<small>Agent-to-User Interface</small></div>
+  <div style="text-align:center;">🟠 TAP<br>{{< short id="-3i0aReEuIE" title="TAP Explained" >}}<small>Trusted Agent Protocol</small></div>
+  <div style="text-align:center;">🔴 AP2/ACP<br>{{< short id="vBjK4tbDgNk" title="AP2 Explained" >}}<small>Agent Payment Protocol</small></div>
 </div>
 
 The [DPO channel](https://www.youtube.com/@dpo-k8s) uses Manim animations + local TTS — zero production cost, fully automated pipeline. See [YouTube Channel for $0](/blog/youtube-channel-zero-cost-pipeline/) for how it's built.
