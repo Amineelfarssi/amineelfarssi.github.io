@@ -51,18 +51,120 @@ Building production AI agents requires choosing the right framework. This analys
 | **AG-UI** / **A2UI** | Agent-to-User interfaces | CopilotKit/Community |
 | **UCP** (Universal Commerce Protocol) | Agentic commerce | Google |
 
-### Protocol Deep Dives (Video)
+### Protocol Deep Dives (Video Series)
 
-If you prefer visual explanations, each protocol has a dedicated 60-second Short:
+Six protocols, 60 seconds each. Embedded below — click play to watch.
 
-| Protocol | Video | What It Covers |
-|----------|-------|----------------|
-| **UCP** | [DPO Shorts](https://www.youtube.com/@dpo-k8s) | How agents discover merchants and complete purchases |
-| **MCP** | [DPO Shorts](https://www.youtube.com/@dpo-k8s) | Claude's tool protocol — how LLMs get capabilities |
-| **A2A** | [DPO Shorts](https://www.youtube.com/@dpo-k8s) | Google agents talking to other agents |
-| **AG-UI** | [DPO Shorts](https://www.youtube.com/@dpo-k8s) | Streaming UI updates from agents to users |
-| **TAP** | [DPO Shorts](https://www.youtube.com/@dpo-k8s) | Visa's agent identity and trust framework |
-| **AP2** | [DPO Shorts](https://www.youtube.com/@dpo-k8s) | Agent payment mandates and recurring billing |
+<!--
+TODO: Replace VIDEO_ID_XXX with your actual YouTube Shorts IDs.
+Get the ID from the URL: https://www.youtube.com/shorts/VIDEO_ID
+-->
+
+<style>
+.short-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 177.78%; /* 9:16 aspect ratio for Shorts */
+  height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #000;
+}
+.short-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+</style>
+
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4 my-6">
+
+<!-- MCP -->
+<div>
+  <p class="font-bold text-center mb-2 text-sm">🔵 MCP</p>
+  <div class="short-container">
+    <iframe src="https://www.youtube.com/embed/VIDEO_ID_MCP" 
+            title="MCP Explained" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+    </iframe>
+  </div>
+  <p class="text-xs text-gray-600 text-center mt-1">Model Context Protocol</p>
+</div>
+
+<!-- A2A -->
+<div>
+  <p class="font-bold text-center mb-2 text-sm">🟢 A2A</p>
+  <div class="short-container">
+    <iframe src="https://www.youtube.com/embed/VIDEO_ID_A2A" 
+            title="A2A Explained" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+    </iframe>
+  </div>
+  <p class="text-xs text-gray-600 text-center mt-1">Agent-to-Agent Protocol</p>
+</div>
+
+<!-- UCP -->
+<div>
+  <p class="font-bold text-center mb-2 text-sm">🟡 UCP</p>
+  <div class="short-container">
+    <iframe src="https://www.youtube.com/embed/VIDEO_ID_UCP" 
+            title="UCP Explained" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+    </iframe>
+  </div>
+  <p class="text-xs text-gray-600 text-center mt-1">Universal Commerce Protocol</p>
+</div>
+
+<!-- AG-UI -->
+<div>
+  <p class="font-bold text-center mb-2 text-sm">🟣 AG-UI</p>
+  <div class="short-container">
+    <iframe src="https://www.youtube.com/embed/VIDEO_ID_AGUI" 
+            title="AG-UI Explained" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+    </iframe>
+  </div>
+  <p class="text-xs text-gray-600 text-center mt-1">Agent-to-User Interface</p>
+</div>
+
+<!-- TAP -->
+<div>
+  <p class="font-bold text-center mb-2 text-sm">🟠 TAP</p>
+  <div class="short-container">
+    <iframe src="https://www.youtube.com/embed/VIDEO_ID_TAP" 
+            title="TAP Explained" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+    </iframe>
+  </div>
+  <p class="text-xs text-gray-600 text-center mt-1">Trusted Agent Protocol</p>
+</div>
+
+<!-- AP2 -->
+<div>
+  <p class="font-bold text-center mb-2 text-sm">🔴 AP2</p>
+  <div class="short-container">
+    <iframe src="https://www.youtube.com/embed/VIDEO_ID_AP2" 
+            title="AP2 Explained" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+    </iframe>
+  </div>
+  <p class="text-xs text-gray-600 text-center mt-1">Agent Payment Protocol</p>
+</div>
+
+</div>
+
+{{< alert icon="info" cardColor="#f59e0b" iconColor="#fff" textColor="#fff" >}}
+**To activate embeds:** Replace `VIDEO_ID_XXX` with your actual YouTube Shorts IDs (the part after `/shorts/` in the URL). Example: `dQw4w9WgXcQ`
+{{< /alert >}}
 
 The [DPO channel](https://www.youtube.com/@dpo-k8s) uses Manim animations + local TTS — zero production cost, fully automated pipeline. See [YouTube Channel for $0](/blog/youtube-channel-zero-cost-pipeline/) for how it's built.
 
