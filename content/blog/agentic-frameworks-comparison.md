@@ -1,7 +1,7 @@
 ---
 title: "Agentic Frameworks Deep Dive: pi-agent-core vs Google ADK vs AWS Strands vs CrewAI vs LangGraph vs Pydantic AI"
 date: 2026-02-01
-description: "A comprehensive comparison of major agentic frameworks examining session management, memory systems, protocol support, agent loops, and replay capabilities."
+description: "pi-agent-core vs Google ADK vs AWS Strands vs CrewAI vs LangGraph vs Pydantic AI — sessions, memory, protocols, and agent loops compared."
 tags: ["AI Agents", "Frameworks", "Architecture", "LangGraph", "CrewAI", "AWS Strands", "Google ADK", "Pydantic AI", "OpenClaw"]
 categories: ["Technical Deep Dive"]
 showTableOfContents: true
@@ -12,6 +12,8 @@ showWordCount: true
 {{< lead >}}
 Building production AI agents requires choosing the right framework. This analysis examines **pi-agent-core** (OpenClaw's runtime), **Google ADK**, **AWS Strands**, **CrewAI**, **LangGraph**, and **Pydantic AI** across critical dimensions: sessions, memory, protocols, agent loops, and replay support.
 {{< /lead >}}
+
+<!--more-->
 
 ---
 
