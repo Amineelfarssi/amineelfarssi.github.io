@@ -114,3 +114,7 @@ LinkedIn
 {{< button href="https://github.com/amineelfarssi" target="_blank" >}}
 GitHub
 {{< /button >}}
+
+{{< button href="https://x.com/amineelfarssi" target="_blank" >}}
+X / Twitter
+{{< /button >}}
