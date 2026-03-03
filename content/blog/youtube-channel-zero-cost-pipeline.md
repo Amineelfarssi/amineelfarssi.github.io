@@ -27,13 +27,13 @@ The solution: automate the entire pipeline from script to upload.
 
 {{< mermaid >}}
 flowchart TD
-    A["💡 Topic"] --> B["🤖 Research\nKimi K2.5 (~$0.001)"]
-    B --> C["✍️ Script\nClaude Opus (~$0.05)\n~500 chars = 35s speech"]
-    C --> D["🎬 Animation\nManim on RTX 2080 Ti\nOptiX GPU rendering"]
-    D --> E["🎙️ Narration\nKokoro TTS local\nam_michael voice"]
-    E --> F["✂️ Edit\nFFmpeg: sync + speed\nmax 1.2x"]
-    F --> G["📤 Upload\nYouTube Data API v3\nOAuth2 token"]
-    G --> H["📱 Short published\n< 60s, vertical 9:16"]
+    A["💡 Topic"] --> B["🤖 Research<br/>Kimi K2.5 (~$0.001)"]
+    B --> C["✍️ Script<br/>Claude Opus (~$0.05)<br/>~500 chars = 35s speech"]
+    C --> D["🎬 Animation<br/>Manim on RTX 2080 Ti<br/>OptiX GPU rendering"]
+    D --> E["🎙️ Narration<br/>Kokoro TTS local<br/>am_michael voice"]
+    E --> F["✂️ Edit<br/>FFmpeg: sync + speed<br/>max 1.2x"]
+    F --> G["📤 Upload<br/>YouTube Data API v3<br/>OAuth2 token"]
+    G --> H["📱 Short published<br/>< 60s, vertical 9:16"]
     style D fill:#1e3a5f,color:#fff
     style E fill:#10b981,color:#fff
 {{< /mermaid >}}

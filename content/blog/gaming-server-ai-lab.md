@@ -34,14 +34,14 @@ The RTX 2080 Ti is the key. 11GB of VRAM is enough to run serious local models, 
 
 {{< mermaid >}}
 graph TD
-    GW["🦞 OpenClaw Gateway\n(port 18789)"]
-    NEO["🧠 Neo4j KG\n(port 7687, Docker)"]
-    CHR["🔍 ChromaDB\n(vector memory)"]
-    PLEX["🎬 Plex + *arr stack\n(ports 32400, 7878, 8989...)"]
+    GW["🦞 OpenClaw Gateway<br/>(port 18789)"]
+    NEO["🧠 Neo4j KG<br/>(port 7687, Docker)"]
+    CHR["🔍 ChromaDB<br/>(vector memory)"]
+    PLEX["🎬 Plex + *arr stack<br/>(ports 32400, 7878, 8989...)"]
     DOCKER["🐳 Docker (Colima)"]
-    GPU1["⚡ RTX 2080 Ti\nBlender OptiX\nKokoro TTS\nOllama models"]
-    XVFB["🖥️ Chrome on Xvfb:99\n(X autopilot, CDP:9222)"]
-    NETDATA["📊 Netdata v2.8.5\n(monitoring)"]
+    GPU1["⚡ RTX 2080 Ti<br/>Blender OptiX<br/>Kokoro TTS<br/>Ollama models"]
+    XVFB["🖥️ Chrome on Xvfb:99<br/>(X autopilot, CDP:9222)"]
+    NETDATA["📊 Netdata v2.8.5<br/>(monitoring)"]
 
     GW --> NEO
     GW --> CHR

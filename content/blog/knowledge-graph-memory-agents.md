@@ -31,19 +31,19 @@ The missing piece is a **knowledge graph** — structured facts about entities a
 
 {{< mermaid >}}
 graph LR
-    DAILY["📝 Daily Notes\nmemory/YYYY-MM-DD.md"]
-    MEMORY["🧠 MEMORY.md\nlong-term facts"]
-    CRON["⏰ Cron @ 2 AM\ndaily-ingest.sh"]
+    DAILY["📝 Daily Notes<br/>memory/YYYY-MM-DD.md"]
+    MEMORY["🧠 MEMORY.md<br/>long-term facts"]
+    CRON["⏰ Cron @ 2 AM<br/>daily-ingest.sh"]
     
     DAILY --> CRON
     MEMORY --> CRON
     
-    CRON --> GRAPHITI["🔗 Graphiti v0.28.1\nentity + edge extraction"]
-    GRAPHITI --> KIMI["🤖 Kimi K2 Turbo\nLLM extraction"]
-    GRAPHITI --> NEO4J["🗄️ Neo4j 5\nDocker, port 7687"]
-    GRAPHITI --> EMBED["📐 all-MiniLM-L6-v2\n384-dim, CPU"]
+    CRON --> GRAPHITI["🔗 Graphiti v0.28.1<br/>entity + edge extraction"]
+    GRAPHITI --> KIMI["🤖 Kimi K2 Turbo<br/>LLM extraction"]
+    GRAPHITI --> NEO4J["🗄️ Neo4j 5<br/>Docker, port 7687"]
+    GRAPHITI --> EMBED["📐 all-MiniLM-L6-v2<br/>384-dim, CPU"]
     
-    QUERY["🔍 Query Time"] --> RRF["RRF Scoring\nKG + ChromaDB + grep"]
+    QUERY["🔍 Query Time"] --> RRF["RRF Scoring<br/>KG + ChromaDB + grep"]
     NEO4J --> RRF
     CHROMA["ChromaDB"] --> RRF
     RAW["Raw files"] --> RRF

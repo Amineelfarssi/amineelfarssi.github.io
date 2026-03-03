@@ -37,12 +37,12 @@ The key was the **ownership model**. Forge doesn't write code. Sage doesn't touc
 
 {{< mermaid >}}
 flowchart LR
-    A["📋 Linear Issue\ncreated"] --> B["🏷️ Label:\nagent:bolt"]
-    B --> C["🔔 Webhook fires\n/opt/linear-webhook/handler.py"]
+    A["📋 Linear Issue<br/>created"] --> B["🏷️ Label:<br/>agent:bolt"]
+    B --> C["🔔 Webhook fires<br/>/opt/linear-webhook/handler.py"]
     C --> D{"Route by label"}
-    D --> E["⚡ Bolt spawned\non Lumi's server"]
-    E --> F["🔨 Implement\n+ commit"]
-    F --> G["📬 PR opened\n→ develop"]
+    D --> E["⚡ Bolt spawned<br/>on Lumi's server"]
+    E --> F["🔨 Implement<br/>+ commit"]
+    F --> G["📬 PR opened<br/>→ develop"]
     G --> H["👁️ Lumi reviews"]
     H --> I["✅ Merged"]
     style C fill:#1e3a5f,color:#fff
