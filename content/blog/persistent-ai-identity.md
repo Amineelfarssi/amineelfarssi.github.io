@@ -67,7 +67,7 @@ graph TD
 ```markdown
 ## Infrastructure — Gaming Server
 - **Hostname**: amine-MS-7B17
-- **Tailscale IP**: 100.68.164.42
+- **Tailscale IP**: 100.x.y.z
 - **CPU**: Intel i5-9600K 6C/6T @ 3.7GHz
 - **RAM**: 64GB
 - **GPU**: RTX 2080 Ti (11GB VRAM)

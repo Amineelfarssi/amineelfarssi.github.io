@@ -97,10 +97,10 @@ The machine sits in my home but I access it from everywhere via **Tailscale**:
 
 ```bash
 # From my Mac
-ssh amine@amine-ms-7b17.taild14f8d.ts.net
+ssh amine@your-device.ts.net
 
 # OpenClaw TUI
-openclaw tui --url wss://amine-ms-7b17.taild14f8d.ts.net --token <token>
+openclaw tui --url wss://your-device.ts.net --token <token>
 ```
 
 Tailscale gives me a stable hostname regardless of ISP changes, with WireGuard encryption. The gateway binds to `127.0.0.1` and Tailscale Serve proxies it over HTTPS — no port forwarding, no exposed ports.

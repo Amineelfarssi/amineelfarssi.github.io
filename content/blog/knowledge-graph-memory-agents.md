@@ -137,7 +137,7 @@ Each ingest chunk takes ~3-5 seconds (one LLM call per paragraph for entity extr
 
 The question "what do I know about Lumi's server issues?" now returns:
 
-> **Entity: Lumi's server (ip-172-31-47-198)**  
+> **Entity: Lumi's server (your-ec2-instance)**  
 > - t3.medium, 4GB RAM (downgraded from t3.large 2026-02-10)
 > - Runs OpenClaw gateway PID 985
 > - Memory pressure: zombie gateway processes at 137% CPU (2026-02-28, 2026-03-03)
