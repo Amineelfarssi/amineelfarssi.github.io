@@ -40,10 +40,6 @@ Building production AI agents requires choosing the right framework. This analys
 **Important Context:** Google played a central role in creating several key agentic protocols (A2A, parts of UCP). Their ADK naturally has first-class support for the protocols they helped design.
 {{< /alert >}}
 
-{{< alert icon="play-circle" cardColor="#dc2626" iconColor="#fff" textColor="#fff" >}}
-**🎬 Video Series:** I created a [YouTube Shorts series](https://www.youtube.com/@dpo-k8s) covering these protocols in 60 seconds each — UCP, MCP, A2A, AG-UI, TAP, and AP2. Check the [DPO channel](https://www.youtube.com/@dpo-k8s) for quick visual breakdowns.
-{{< /alert >}}
-
 ### Protocol Landscape
 
 | Protocol | Purpose | Origin |
@@ -52,21 +48,6 @@ Building production AI agents requires choosing the right framework. This analys
 | **A2A** (Agent-to-Agent) | Inter-agent coordination | Google |
 | **AG-UI** / **A2UI** | Agent-to-User interfaces | CopilotKit/Community |
 | **UCP** (Universal Commerce Protocol) | Agentic commerce | Google |
-
-### Protocol Deep Dives (Video Series)
-
-Six protocols, 60 seconds each. All from the [DPO channel](https://www.youtube.com/@dpo-k8s).
-
-<div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin:24px 0;">
-  <div style="text-align:center;">🔵 MCP<br>{{< short id="nsVnwjaIKx8" title="MCP Explained" >}}<small>Model Context Protocol</small></div>
-  <div style="text-align:center;">🟢 A2A<br>{{< short id="3ypCZG7okmE" title="A2A Explained" >}}<small>Agent-to-Agent Protocol</small></div>
-  <div style="text-align:center;">🟡 UCP<br>{{< short id="4nTOfya_KAg" title="UCP Explained" >}}<small>Universal Commerce Protocol</small></div>
-  <div style="text-align:center;">🟣 AG-UI<br>{{< short id="aB8F5scVa7Y" title="AG-UI Explained" >}}<small>Agent-to-User Interface</small></div>
-  <div style="text-align:center;">🟠 TAP<br>{{< short id="-3i0aReEuIE" title="TAP Explained" >}}<small>Trusted Agent Protocol</small></div>
-  <div style="text-align:center;">🔴 AP2/ACP<br>{{< short id="vBjK4tbDgNk" title="AP2 Explained" >}}<small>Agent Payment Protocol</small></div>
-</div>
-
-The [DPO channel](https://www.youtube.com/@dpo-k8s) uses Manim animations + local TTS — zero production cost, fully automated pipeline. See [YouTube Channel for $0](/blog/youtube-channel-zero-cost-pipeline/) for how it's built.
 
 ### Framework Protocol Support Matrix
 
@@ -85,11 +66,9 @@ Beyond the matrix, here's what each protocol actually enables:
 
 **MCP (Model Context Protocol)** — The "USB-C for AI tools." Standardizes how LLMs discover and call tools, access resources, and get structured prompts. Anthropic's protocol, now adopted by Google, OpenAI, and the ecosystem.
 
-> 📺 [MCP explained in 60 seconds](https://www.youtube.com/@dpo-k8s) — why Claude needed a standard way to use tools, and how it became the industry default.
-
 **UCP (Universal Commerce Protocol)** — Google's protocol for agentic commerce. Agents discover merchants via `.well-known/ucp`, negotiate offers, and complete checkout flows. Think of it as "Stripe for AI agents" — but a protocol, not a company.
 
-> 📺 [UCP explained in 60 seconds](https://www.youtube.com/@dpo-k8s) — how agents will shop for you: discovery, negotiation, and checkout without human intervention.
+> 🎬 Want visual explainers for each protocol? See [AI Agent Protocols in 60 Seconds](/blog/dpo-protocol-shorts/).
 
 ### Google ADK Protocol Excellence
 
@@ -115,8 +94,6 @@ result = await remote_agent.invoke("analyze this data")
 - ✅ AG-UI (Agentic UI) support
 - ✅ Bidi-streaming for real-time
 - ✅ Multi-language (Python, Go, Java, TypeScript)
-
-> 📺 [A2A explained in 60 seconds](https://www.youtube.com/@dpo-k8s) — how Google's agents discover and talk to each other, the "HTTP for AI agents."
 
 ---
 
@@ -395,8 +372,6 @@ flowchart LR
 ### Google ADK Bidi-Streaming & AG-UI
 
 **Bidi-streaming** enables real-time voice/video agents. **AG-UI** (or A2UI — Agent-to-User Interface) is the emerging standard for streaming UI state from agents to users. Both are built for latency-sensitive, interactive experiences.
-
-> 📺 [Watch the AG-UI explainer](https://www.youtube.com/@dpo-k8s) — how agents stream partial results, tool outputs, and UI updates without waiting for full completion.
 
 Google ADK has first-class bidi-streaming support:
 
