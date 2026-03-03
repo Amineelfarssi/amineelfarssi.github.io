@@ -4,7 +4,7 @@ description: "AI Engineer | Building Production AI Agents | Belgium"
 ---
 
 {{< lead >}}
-AI Engineer building **production AI agents** at one of Belgium's largest banks. From AML detection to enterprise agentic systems.
+AI Engineer building **production AI agents** at one of Belgium's largest banks. Agentic systems, multi-agent platforms, and the emerging protocol stack.
 {{< /lead >}}
 
 I build AI that **acts**, not just talks — agents that reason, use tools, and complete real tasks.
@@ -13,10 +13,10 @@ I build AI that **acts**, not just talks — agents that reason, use tools, and 
 About Me
 {{< /button >}}
 
-{{< button href="/skills" target="_self" >}}
-Agentic Skills
+{{< button href="/blog" target="_self" >}}
+Writing
 {{< /button >}}
 
-{{< button href="/blog/openclaw-architecture-deep-dive" target="_self" >}}
-Latest: Agent Architecture Deep Dive
+{{< button href="https://youtube.com/@dpo-k8s" target="_blank" >}}
+DPO Channel
 {{< /button >}}
