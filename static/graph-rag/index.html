@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Graph RAG in Practice — Amine El Farssi</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0a1f24;
+    --bg2: #0f2a30;
+    --bg3: #152e35;
+    --bg4: #1a3840;
+    --title: #c8d4d8;
+    --body: #8ea8b2;
+    --bright: #dce8ec;
+    --accent: #00d9a0;
+    --accent2: #00b8e0;
+    --green: #00d9a0;
+    --red: #ff6b6b;
+    --amber: #f59e0b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--body);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 40px;
+    background: radial-gradient(ellipse at center, #0f3038 0%, #08181e 70%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% 80%, rgba(0,217,160,0.04) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0,184,224,0.04) 0%, transparent 50%);
+  }
+
+  .badge {
+    display: inline-block;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 28px;
+  }
+
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--title);
+    letter-spacing: 1px;
+    line-height: 1.05;
+    max-width: 900px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 span { color: var(--accent); }
+
+  .hero .subtitle {
+    font-size: 1.1rem;
+    color: var(--body);
+    max-width: 580px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+  }
+
+  .hero-meta {
+    font-size: 0.85rem;
+    color: #5a7a84;
+    letter-spacing: 1px;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: #3a5a64;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: bounce 2s infinite;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, #3a5a64, transparent);
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* SECTIONS */
+  section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 80px 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .section-label {
+    display: inline-block;
+    border: 1px solid rgba(0,217,160,0.3);
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--title);
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+
+  h3 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--bright);
+    margin-bottom: 12px;
+    margin-top: 32px;
+  }
+
+  p { color: var(--body); margin-bottom: 16px; line-height: 1.75; }
+  p strong { color: var(--bright); font-weight: 600; }
+
+  /* BLOCKQUOTE */
+  blockquote {
+    border-left: 3px solid var(--accent);
+    background: var(--bg3);
+    padding: 20px 24px;
+    margin: 32px 0;
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: var(--body);
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+
+  /* PIPELINE DIAGRAM */
+  .pipeline {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 36px 0;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .pipe-node {
+    background: var(--bg3);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--bright);
+    white-space: nowrap;
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .pipe-node:hover {
+    border-color: var(--accent2);
+    background: var(--bg4);
+    box-shadow: 0 0 16px rgba(0,184,224,0.12);
+    transform: translateY(-2px);
+  }
+
+  .pipe-node.accent {
+    border-color: rgba(0,217,160,0.4);
+    color: var(--accent);
+    background: rgba(0,217,160,0.06);
+  }
+
+  .pipe-arrow {
+    color: #2a5060;
+    font-size: 1.2rem;
+    padding: 0 6px;
+    flex-shrink: 0;
+  }
+
+  /* COMPARISON CARDS */
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 36px 0;
+  }
+
+  @media (max-width: 600px) { .comparison { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--bg3);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 24px;
+    transition: transform 0.2s;
+  }
+
+  .card:hover { transform: translateY(-3px); }
+
+  .card.good { border-left: 3px solid var(--green); }
+  .card.bad  { border-left: 3px solid var(--red); }
+  .card.neutral { border-left: 3px solid var(--accent2); }
+  .card.amber { border-left: 3px solid var(--amber); }
+
+  .card-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .card.good .card-title { color: var(--green); }
+  .card.bad .card-title  { color: var(--red); }
+  .card.neutral .card-title { color: var(--accent2); }
+  .card.amber .card-title { color: var(--amber); }
+
+  .card ul { list-style: none; padding: 0; }
+  .card ul li {
+    padding: 6px 0;
+    font-size: 0.9rem;
+    color: var(--body);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    padding-left: 16px;
+    position: relative;
+  }
+  .card ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: #3a5a64;
+    font-size: 0.8rem;
+  }
+  .card ul li:last-child { border-bottom: none; }
+  .card ul li strong { color: var(--bright); }
+
+  /* CODE BLOCK */
+  pre {
+    background: #081418;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 8px;
+    padding: 20px 24px;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    margin: 24px 0;
+    color: #8ab4be;
+  }
+
+  .code-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #3a5a64;
+    margin-bottom: -12px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .kw { color: #c792ea; }
+  .fn { color: #82aaff; }
+  .str { color: #c3e88d; }
+  .cm { color: #4a6a74; font-style: italic; }
+  .num { color: var(--accent); }
+  .cls { color: #ffcb6b; }
+
+  /* STATS ROW */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin: 36px 0;
+  }
+
+  @media (max-width: 600px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+
+  .stat {
+    background: var(--bg3);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #5a7a84;
+  }
+
+  /* STACK TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 28px 0;
+    font-size: 0.88rem;
+  }
+
+  th {
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #5a7a84;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  td {
+    padding: 11px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: var(--body);
+    vertical-align: top;
+  }
+
+  td:first-child { color: var(--bright); font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; }
+  td strong { color: var(--accent); }
+
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* QUERY EXAMPLE */
+  .query-block {
+    background: rgba(0,217,160,0.04);
+    border: 1px solid rgba(0,217,160,0.15);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 20px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--accent);
+  }
+
+  .query-label {
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #3a6a5a;
+    margin-bottom: 10px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* ANSWER BLOCK */
+  .answer-block {
+    background: var(--bg3);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 16px 0;
+    position: relative;
+  }
+
+  .answer-block::before {
+    content: attr(data-source);
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: absolute;
+    top: -10px;
+    left: 16px;
+    background: var(--bg3);
+    padding: 0 8px;
+  }
+
+  .answer-block.vector::before { color: var(--red); }
+  .answer-block.graph::before { color: var(--green); }
+
+  .answer-block.vector { border: 1px solid rgba(255,107,107,0.2); }
+  .answer-block.graph  { border: 1px solid rgba(0,217,160,0.2); }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 60px 40px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    color: #3a5a64;
+    font-size: 0.85rem;
+  }
+
+  footer a { color: var(--accent2); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ANIMATED NODES (hero) */
+  .nodes-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .node-dot {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(0,217,160,0.15);
+    animation: pulse 4s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.15; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.5); }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="nodes-bg" id="nodesBg"></div>
+  <div class="badge">Engineering Deep Dive</div>
+  <h1>Graph RAG<br>in <span>Practice</span></h1>
+  <p class="subtitle">How I wired Neo4j into my AI agent's memory — and why vector search alone wasn't enough.</p>
+  <div class="hero-meta">Amine El Farssi &nbsp;·&nbsp; March 2026 &nbsp;·&nbsp; 8 min read</div>
+  <div class="scroll-hint">Scroll</div>
+</div>
+
+<!-- THE PROBLEM -->
+<section>
+  <div class="reveal">
+    <div class="section-label">The Problem</div>
+    <h2>Vector Memory Has a Blind Spot</h2>
+    <p>My AI agent <strong>PostSingular</strong>, running on <strong>OpenClaw</strong>, talks to me every day. It helps me build Luminar, manages my YouTube channel, and tracks infrastructure decisions across sessions. Memory was working — but in a subtle broken way.</p>
+
+    <blockquote>
+      "Which decision did we make about the auth system last month, and why?"
+    </blockquote>
+
+    <p>ChromaDB returned 6 chunks. All semantically similar. None connected to each other. No timeline. No causal chain. Just floating text.</p>
+
+    <p>The problem isn't retrieval quality — cosine similarity was fine. The problem is <strong>structural</strong>. Real knowledge has relationships. Facts connect to other facts. A vector store doesn't model that.</p>
+
+    <div class="comparison">
+      <div class="card bad">
+        <div class="card-title">Vector RAG Fails At</div>
+        <ul>
+          <li><strong>Entity tracking:</strong> "What do I know about X?" → chunks, not entities</li>
+          <li><strong>Temporal reasoning:</strong> "What changed this month?" → no timeline</li>
+          <li><strong>Relationship queries:</strong> "What depends on decision Y?" → no traversal</li>
+          <li><strong>Contradiction detection:</strong> "Did I say X before?" → no fact store</li>
+        </ul>
+      </div>
+      <div class="card good">
+        <div class="card-title">Graph RAG Handles</div>
+        <ul>
+          <li><strong>Entity graph:</strong> Persons, Projects, Decisions as nodes</li>
+          <li><strong>Causal chains:</strong> Decision → caused_by → Bug → resolved_by → Fix</li>
+          <li><strong>Timeline queries:</strong> All decisions in February, ordered</li>
+          <li><strong>Multi-hop:</strong> "Everything linked to the auth system"</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section>
+  <div class="reveal">
+    <div class="section-label">Architecture</div>
+    <h2>Standard RAG vs Graph RAG</h2>
+
+    <h3>Standard RAG</h3>
+    <div class="pipeline">
+      <div class="pipe-node">Query</div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-node">Embed</div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-node">Cosine Search</div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-node">Top-K Chunks</div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-node accent">LLM Answer</div>
+    </div>
+
+    <h3>Graph RAG</h3>
+    <div class="pipeline">
+      <div class="pipe-node">Query</div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-node">Extract Entities</div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-node">BFS Traversal</div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-node">Ranked Subgraph</div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-node accent">LLM Answer</div>
+    </div>
+
+    <p>The difference is <strong>what you're searching</strong>. Vectors find text that <em>looks like</em> your query. Graphs find entities and facts that are <em>structurally connected</em> to your query.</p>
+  </div>
+</section>
+
+<!-- THE STACK -->
+<section>
+  <div class="reveal">
+    <div class="section-label">Stack</div>
+    <h2>Three Layers, One Answer</h2>
+
+    <p>My setup runs three retrieval layers, fused with <strong>RRF (Reciprocal Rank Fusion)</strong>:</p>
+
+    <table>
+      <tr><th>Layer</th><th>Tool</th><th>When It Wins</th></tr>
+      <tr><td>Neo4j BFS</td><td>Graphiti v0.28.1</td><td>Entity relationships, causal chains, timelines</td></tr>
+      <tr><td>ChromaDB</td><td>all-MiniLM-L6-v2</td><td>Semantically similar chunks, topic recall</td></tr>
+      <tr><td>grep</td><td>ripgrep</td><td>Exact strings, IDs, issue numbers, code</td></tr>
+    </table>
+
+    <p>RRF gives each result a score based on its <strong>rank across all sources</strong>, not its raw similarity. A result ranking 3rd in KG and 2nd in ChromaDB beats one ranking 1st in only one source.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-num">133</div><div class="stat-label">Entities</div></div>
+      <div class="stat"><div class="stat-num">117</div><div class="stat-label">Relationships</div></div>
+      <div class="stat"><div class="stat-num">23</div><div class="stat-label">Episodes</div></div>
+      <div class="stat"><div class="stat-num">162</div><div class="stat-label">Semantic Chunks</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- INGESTION PIPELINE -->
+<section>
+  <div class="reveal">
+    <div class="section-label">Ingestion</div>
+    <h2>Nightly Cron to Neo4j</h2>
+
+    <p>Every night at 2 AM, a cron job ingests the day's notes into Neo4j via Graphiti. Graphiti extracts entities and relationships from raw markdown using an LLM, then stores them with timestamps and embeddings.</p>
+
+    <div class="pipeline">
+      <div class="pipe-node">Daily Notes<br><small style="color:#3a5a64">memory/YYYY-MM-DD.md</small></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-node">Graphiti<br><small style="color:#3a5a64">entity extraction</small></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-node accent">Kimi K2 Turbo<br><small style="color:#3a6a5a">LLM</small></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-node">Neo4j<br><small style="color:#3a5a64">graph store</small></div>
+    </div>
+
+    <p class="code-label">// daily-ingest.sh</p>
+    <pre><span class="cm">#!/bin/bash</span>
+YESTERDAY=$(<span class="fn">date</span> -d <span class="str">"yesterday"</span> +%Y-%m-%d)
+NOTES=<span class="str">"memory/${YESTERDAY}.md"</span>
+
+<span class="kw">if</span> [ -f <span class="str">"$NOTES"</span> ]; <span class="kw">then</span>
+    .venv/bin/<span class="fn">python</span> memory.py ingest <span class="str">"$NOTES"</span>
+<span class="kw">fi</span>
+
+<span class="cm"># Also ingest MEMORY.md changes</span>
+.venv/bin/<span class="fn">python</span> memory.py ingest MEMORY.md</pre>
+  </div>
+</section>
+
+<!-- THE KIMI PATCH -->
+<section>
+  <div class="reveal">
+    <div class="section-label">The Hard Part</div>
+    <h2>The Patch That Took 4 Hours</h2>
+
+    <p>Graphiti's default client uses <code style="color:var(--accent2);background:var(--bg3);padding:2px 6px;border-radius:3px;">response_format</code> JSON schema — which Moonshot's API doesn't support. I had to patch it with a custom client:</p>
+
+    <p class="code-label">// KimiClient — inject schema into system prompt</p>
+    <pre><span class="kw">class</span> <span class="cls">KimiClient</span>(<span class="cls">OpenAIClient</span>):
+    <span class="kw">async def</span> <span class="fn">generate_response</span>(
+        <span class="kw">self</span>, messages, response_model=<span class="kw">None</span>, **kwargs
+    ):
+        <span class="kw">if</span> response_model:
+            schema = response_model.<span class="fn">model_json_schema</span>()
+            schema_str = json.<span class="fn">dumps</span>(schema, indent=<span class="num">2</span>)
+
+            <span class="cm"># Inject schema into system message instead of response_format</span>
+            injection = (
+                <span class="str">f"\n\nRespond with valid JSON matching:\n"</span>
+                <span class="str">f"```json\n{schema_str}\n```\n"</span>
+                <span class="str">f"Return ONLY the JSON, no other text."</span>
+            )
+            <span class="kw">for</span> msg <span class="kw">in</span> messages:
+                <span class="kw">if</span> msg[<span class="str">"role"</span>] == <span class="str">"system"</span>:
+                    msg[<span class="str">"content"</span>] += injection; <span class="kw">break</span>
+
+        kwargs.<span class="fn">pop</span>(<span class="str">"response_format"</span>, <span class="kw">None</span>)  <span class="cm"># Moonshot rejects it</span>
+        <span class="kw">return await super</span>().<span class="fn">generate_response</span>(messages, **kwargs)</pre>
+
+    <blockquote>
+      This is the kind of thing you only find by reading the source code. The fix is 20 lines. The debugging is 4 hours.
+    </blockquote>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section>
+  <div class="reveal">
+    <div class="section-label">Results</div>
+    <h2>Vector vs Graph: A Real Query</h2>
+
+    <div class="query-block">
+      <div class="query-label">Query</div>
+      "What infrastructure decisions did we make in February, and why?"
+    </div>
+
+    <div class="answer-block vector" data-source="Vector RAG">
+      <p style="font-size:0.9rem">Returns 5 chunks about infrastructure. Some from February, some not. No ordering. No causal relationships between decisions. No "why."</p>
+      <ul style="list-style:none;padding:0;margin-top:10px">
+        <li style="padding:4px 0;font-size:0.85rem;color:var(--body)">→ Tailscale gateway config (Feb 19)</li>
+        <li style="padding:4px 0;font-size:0.85rem;color:var(--body)">→ Docker migration notes (Jan 31)</li>
+        <li style="padding:4px 0;font-size:0.85rem;color:var(--body)">→ SSH setup guide (Feb 8)</li>
+      </ul>
+    </div>
+
+    <div class="answer-block graph" data-source="Graph RAG">
+      <p style="font-size:0.9rem">Returns a traversal with timestamps and causal chain:</p>
+      <ul style="list-style:none;padding:0;margin-top:10px">
+        <li style="padding:4px 0;font-size:0.85rem;color:var(--bright)"><strong>InfraDecision[Tailscale-fix]</strong></li>
+        <li style="padding:4px 0;font-size:0.85rem;color:var(--body);padding-left:20px">→ caused_by: BugReport[ws-security-block] (Feb 19)</li>
+        <li style="padding:4px 0;font-size:0.85rem;color:var(--body);padding-left:20px">→ resolved_by: Fix[serve-https-proxy] (Feb 23)</li>
+        <li style="padding:4px 0;font-size:0.85rem;color:var(--bright);margin-top:8px"><strong>InfraDecision[Gaming-server-migration]</strong></li>
+        <li style="padding:4px 0;font-size:0.85rem;color:var(--body);padding-left:20px">→ motivation: Mac-latency-issue (Feb 10)</li>
+        <li style="padding:4px 0;font-size:0.85rem;color:var(--body);padding-left:20px">→ hardware: i5-9600K, 64GB, RTX 2080 Ti</li>
+      </ul>
+    </div>
+
+    <p>The graph knows <strong>why</strong> the decision was made and <strong>what</strong> it connects to. The vector store just knows it's semantically close to "infrastructure."</p>
+  </div>
+</section>
+
+<!-- OPENCLAW INTEGRATION -->
+<section>
+  <div class="reveal">
+    <div class="section-label">OpenClaw</div>
+    <h2>Wired Into the Agent Runtime</h2>
+
+    <p>The whole thing runs inside <strong>OpenClaw</strong> as my primary agent runtime. Memory search is a first-class tool — called automatically before every response:</p>
+
+    <p class="code-label">// OpenClaw tool definition</p>
+    <pre>{
+  <span class="str">"tool"</span>: <span class="str">"memory_search"</span>,
+  <span class="str">"description"</span>: <span class="str">"Neo4j KG + ChromaDB + grep. Returns ranked snippets."</span>,
+  <span class="str">"parameters"</span>: {
+    <span class="str">"query"</span>: <span class="str">"string"</span>,
+    <span class="str">"maxResults"</span>: <span class="str">"number"</span>,
+    <span class="str">"minScore"</span>: <span class="str">"number"</span>
+  }
+}</pre>
+
+    <div class="comparison">
+      <div class="card neutral">
+        <div class="card-title">KG handles</div>
+        <ul>
+          <li>What did we decide and why</li>
+          <li>Relationship traversal</li>
+          <li>Timeline queries</li>
+        </ul>
+      </div>
+      <div class="card neutral">
+        <div class="card-title">ChromaDB handles</div>
+        <ul>
+          <li>What did we say about this topic</li>
+          <li>Semantic similarity</li>
+          <li>Broad recall</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LESSONS -->
+<section>
+  <div class="reveal">
+    <div class="section-label">Lessons</div>
+    <h2>What I'd Do Differently</h2>
+
+    <div class="comparison">
+      <div class="card amber">
+        <div class="card-title">Start with a schema</div>
+        <ul>
+          <li>Graphiti auto-extracts but defining entity types (Person, Project, Decision) upfront gives cleaner traversals</li>
+        </ul>
+      </div>
+      <div class="card amber">
+        <div class="card-title">Use a strong LLM for extraction</div>
+        <ul>
+          <li>Tried Qwen3:8b first — noticeably worse quality. Kimi K2 Turbo is worth the cost for this step</li>
+        </ul>
+      </div>
+      <div class="card amber">
+        <div class="card-title">Ingest daily, not in bulk</div>
+        <ul>
+          <li>Bulk ingesting 3 months = rate limits + duplicate edges. Daily cron is the right cadence</li>
+        </ul>
+      </div>
+      <div class="card amber">
+        <div class="card-title">Plan for deduplication</div>
+        <ul>
+          <li>"Luminar" vs "luminar-labs" vs "LuminarLabs" become 3 separate entities without a dedup pass</li>
+        </ul>
+      </div>
+    </div>
+
+    <blockquote>
+      Graph RAG isn't a silver bullet. It's extra infrastructure, extra latency, and you need an LLM good enough to extract entities cleanly. But for an agent that's your co-builder — not just a chatbot — it's the difference between short-term and long-term memory.
+    </blockquote>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Built on a gaming server — i5-9600K, 64GB RAM, RTX 2080 Ti — running <a href="https://openclaw.ai">OpenClaw</a>.</p>
+  <p style="margin-top:8px">Neo4j + Graphiti v0.28.1 + ChromaDB + Kimi K2 Turbo + all-MiniLM-L6-v2</p>
+  <p style="margin-top:20px"><a href="https://amineelfarssi.github.io">← Back to blog</a></p>
+</footer>
+
+<script>
+// Scatter node dots in hero
+const bg = document.getElementById('nodesBg');
+for (let i = 0; i < 20; i++) {
+  const dot = document.createElement('div');
+  dot.className = 'node-dot';
+  dot.style.left = Math.random() * 100 + '%';
+  dot.style.top = Math.random() * 100 + '%';
+  dot.style.animationDelay = Math.random() * 4 + 's';
+  dot.style.animationDuration = (3 + Math.random() * 4) + 's';
+  bg.appendChild(dot);
+}
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
