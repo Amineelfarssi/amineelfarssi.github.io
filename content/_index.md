@@ -17,6 +17,6 @@ About Me
 Writing
 {{< /button >}}
 
-{{< button href="https://youtube.com/@dpo-k8s" target="_blank" >}}
-DPO Channel
+{{< button href="https://youtube.com/@DPO-AI" target="_blank" >}}
+AI Engineering Patterns ↗
 {{< /button >}}

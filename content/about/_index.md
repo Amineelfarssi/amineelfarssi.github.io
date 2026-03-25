@@ -88,6 +88,7 @@ GitHub
 
 I write about agent architecture, production AI systems, and the emerging protocol stack:
 
+- [27 AI Engineering Patterns in 60 Seconds Each](/blog/ai-engineering-patterns-series/) — the full series index with links to all 27 episodes
 - [AI Agent Protocols in 60 Seconds](/blog/dpo-protocol-shorts/) — MCP, A2A, UCP, AG-UI, ACP as Shorts
 - [Building an AI with Persistent Identity](/blog/persistent-ai-identity/) — Neo4j + ChromaDB memory architecture
 - [Multi-Agent Startup: 9 Agents Building Luminar](/blog/multi-agent-startup/)
@@ -97,12 +98,20 @@ I write about agent architecture, production AI systems, and the emerging protoc
 - [Inside OpenClaw: Architecture Deep Dive](/blog/openclaw-architecture-deep-dive/)
 - [YouTube Channel for $0: Manim + TTS + FFmpeg](/blog/youtube-channel-zero-cost-pipeline/)
 
-## DPO Channel
+## AI Engineering Patterns — YouTube
 
-I run a YouTube channel explaining agentic protocols and AI concepts in 60-second Manim animations — fully automated pipeline, zero production cost.
+I run [@DPO-AI](https://youtube.com/@DPO-AI), a YouTube Shorts channel publishing one production AI engineering pattern per week. 27 episodes live. Each Short is 60–70 seconds covering a real pattern — the problem it solves, how it works, and the implementation.
 
-{{< button href="https://youtube.com/@dpo-k8s" target="_blank" >}}
-DPO on YouTube
+Recent episodes: Hybrid Search (BM25 + vectors + RRF), Agentic RAG, Self-RAG, Corrective RAG (CRAG), Multi-Agent Orchestration, LLM-as-Judge, Context Distillation.
+
+The full pipeline is automated — Remotion animations, Google Chirp3-HD TTS, Whisper subtitles, background music, and YouTube Data API upload. All from a home server with an RTX 2080 Ti.
+
+{{< button href="https://youtube.com/@DPO-AI" target="_blank" >}}
+Watch the Series ↗
+{{< /button >}}
+
+{{< button href="https://www.youtube.com/playlist?list=PL_iuY-f0mGD7PVurKyPgVvl9-jB8_NvZB" target="_blank" >}}
+Full Playlist ↗
 {{< /button >}}
 
 ## Let's Connect

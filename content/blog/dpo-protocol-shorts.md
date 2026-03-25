@@ -10,7 +10,7 @@ weight: 1
 ---
 
 {{< lead >}}
-Six agentic protocols. Sixty seconds each. Built with Manim + local TTS at zero cost. All on the [DPO YouTube channel](https://www.youtube.com/@dpo-k8s).
+Six agentic protocols. Sixty seconds each. Built with Manim + local TTS at zero cost. All on the [DPO YouTube channel](https://www.youtube.com/@DPO-AI).
 {{< /lead >}}
 
 <!--more-->
@@ -80,5 +80,5 @@ Defines how agents request payment authorization from users, store mandates, and
 ---
 
 {{< alert icon="info" cardColor="#1e3a5f" iconColor="#60a5fa" textColor="#f0f0f0" >}}
-**About the channel:** The [DPO channel](https://www.youtube.com/@dpo-k8s) runs a fully automated pipeline — Manim animations rendered on a local RTX 2080 Ti, Kokoro TTS for narration, FFmpeg for audio sync, and the YouTube Data API for upload. Total cost: $0/month. See [how it's built](/blog/youtube-channel-zero-cost-pipeline/).
+**About the channel:** The [DPO channel](https://www.youtube.com/@DPO-AI) runs a fully automated pipeline — Manim animations rendered on a local RTX 2080 Ti, Kokoro TTS for narration, FFmpeg for audio sync, and the YouTube Data API for upload. Total cost: $0/month. See [how it's built](/blog/youtube-channel-zero-cost-pipeline/).
 {{< /alert >}}

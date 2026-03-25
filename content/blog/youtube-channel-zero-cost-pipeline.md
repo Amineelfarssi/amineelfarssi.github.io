@@ -10,7 +10,7 @@ showWordCount: true
 ---
 
 {{< lead >}}
-The DPO channel (<a href="https://youtube.com/@dpo-k8s">@dpo-k8s</a>) publishes AI/ML technical Shorts. 7 videos uploaded so far, covering agent memory, HNSW indexing, and agentic protocols. The entire production pipeline costs less than a coffee per video.
+The DPO channel (<a href="https://youtube.com/@DPO-AI">@DPO-AI</a>) publishes AI/ML technical Shorts. 7 videos uploaded so far, covering agent memory, HNSW indexing, and agentic protocols. The entire production pipeline costs less than a coffee per video.
 {{< /lead >}}
 
 ## Why Build This
