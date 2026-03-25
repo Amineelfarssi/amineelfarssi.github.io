@@ -88,20 +88,6 @@ The format is strict: **60–70 seconds, no fluff, one pattern per episode**. If
 
 ---
 
-## The Pipeline
-
-Every episode is built on a home server (RTX 2080 Ti, 64GB RAM) with a fully automated stack:
-
-- **Remotion** — TypeScript/React animations at 1080×1920 @30fps
-- **Google Chirp3-HD-Puck** — TTS narration, word-level timestamps
-- **Whisper** — aligned subtitle generation
-- **FFmpeg + NVENC** — GPU-accelerated encoding, music mixing
-- **YouTube Data API** — automated upload with duplicate guard
-
-Total cost: ~$0/month (Vertex AI TTS free tier covers it).
-
-The code for the pipeline is on [GitHub](https://github.com/amineelfarssi).
-
 ---
 
 ## What's Coming
