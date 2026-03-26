@@ -72,6 +72,7 @@ The format is strict: **60–70 seconds, no fluff, one pattern per episode**. If
 
 | EP | Pattern | Key Stat |
 |----|---------|----------|
+| [EP28](https://youtu.be/90Ag8hOWeB0) | **Agent Skills Explained** | — |
 | [EP26](https://youtu.be/Nnb7FfjR1lM) | **Multi-Agent Orchestration** | 34% failure → 91% success with specialist agents |
 | [EP20](https://youtu.be/BC_DxaVacEo) | **Context Distillation** | 16K context → 800 tokens, knowledge preserved |
 | [EP16](https://youtu.be/-N0Z5bWRh8A) | **Context Engineering** | What goes in the context window determines everything |
