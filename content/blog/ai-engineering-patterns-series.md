@@ -72,6 +72,7 @@ The format is strict: **60–70 seconds, no fluff, one pattern per episode**. If
 
 | EP | Pattern | Key Stat |
 |----|---------|----------|
+| [drop01](https://youtu.be/gh5kOZrbCxY) | **one engineer. no budget. 19,000 views. how? #AIEngineering #Shorts** | — |
 | [EP28](https://youtu.be/90Ag8hOWeB0) | **Agent Skills Explained** | — |
 | [EP26](https://youtu.be/Nnb7FfjR1lM) | **Multi-Agent Orchestration** | 34% failure → 91% success with specialist agents |
 | [EP20](https://youtu.be/BC_DxaVacEo) | **Context Distillation** | 16K context → 800 tokens, knowledge preserved |
