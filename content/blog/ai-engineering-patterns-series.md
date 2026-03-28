@@ -74,6 +74,7 @@ The format is strict: **60–70 seconds, no fluff, one pattern per episode**. If
 
 | EP | Pattern | Key Stat |
 |----|---------|----------|
+| [EP29](https://youtu.be/kplbxcpSAsw) | **688 Stars. Zero Fine** | — |
 | [EP29](https://youtu.be/9ccwrVczMU8) | **688 Stars. Zero Fine** | — |
 | [drop01](https://youtu.be/gh5kOZrbCxY) | **one engineer. no budget. 19,000 views. how? #AIEngineering #Shorts** | — |
 | [EP28](https://youtu.be/90Ag8hOWeB0) | **Agent Skills Explained** | — |
