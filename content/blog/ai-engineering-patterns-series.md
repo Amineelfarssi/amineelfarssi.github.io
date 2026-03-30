@@ -90,6 +90,7 @@ The format is strict: **60–70 seconds, no fluff, one pattern per episode**. If
 
 | EP | Pattern | Key Stat |
 |----|---------|----------|
+| [EP30](https://youtu.be/MMy0gBnDkzs) | **3 Cheap Models Beat GPT** | — |
 | [EP06](https://youtu.be/tmBTihfYgww) | **Semantic Caching** | 40% cost reduction on real workloads |
 | [EP05](https://youtu.be/QDYrf4__Nlo) | **Circuit Breaker for LLMs** | Stop cascading failures at the LLM layer |
 | [EP03](https://youtu.be/AzMp0Yz20h4) | **Hedged Requests** — P99 killer | P99 collapses to ~P50 of slower backend |
