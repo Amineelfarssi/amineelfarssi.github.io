@@ -104,6 +104,13 @@ The format is strict: **60–70 seconds, no fluff, one pattern per episode**. If
 
 ---
 
+
+### Safety & Capability
+
+| EP | Pattern | Key Stat |
+|----|---------|----------|
+| [EP35](https://youtu.be/7uZwcs8GeO0) | **Anthropic Nerfed Claude On Purpose** | — |
+
 ## What's Coming
 
 - **EP28** — MoE Routing (mixture of experts, when to use which expert)
