@@ -74,6 +74,7 @@ The format is strict: **60–70 seconds, no fluff, one pattern per episode**. If
 
 | EP | Pattern | Key Stat |
 |----|---------|----------|
+| [EP33](https://youtu.be/KLe4K5DQETM) | **Stop Interviewing, Start Acting** | — |
 | [EP32](https://youtu.be/eyy7Huk3Y1g) | **LLM Wiki** | — |
 | [EP32](https://youtu.be/zXXcjrakBfE) | **LLM Wiki** | — |
 | [EP31](https://youtu.be/D2gQBfrRVUE) | **519K Lines. 50 Hidden Tools. Inside Claude Code's Leaked Source #AIEngineering** | — |
