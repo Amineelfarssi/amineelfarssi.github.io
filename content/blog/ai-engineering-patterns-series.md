@@ -39,6 +39,7 @@ The format is strict: **60–70 seconds, no fluff, one pattern per episode**. If
 
 | EP | Pattern | Key Stat |
 |----|---------|----------|
+| [EP36](https://youtu.be/BpyTWA984Iw) | **RLM Instead of RAG** | — |
 | [drop03](https://youtu.be/5B3aRMPtWo0) | **$29B for a model picker. The brain was never theirs. #Cursor #Claude #Shorts** | — |
 | [drop02](https://youtu.be/DEGd3jYYnzI) | **They built OpenAI. Then they walked out. #Anthropic #AIEngineering #Shorts** | — |
 | [EP28](https://youtu.be/TESTID12345) | **MoE Routing** | 60% cost cut |
