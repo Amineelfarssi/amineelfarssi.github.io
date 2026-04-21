@@ -112,6 +112,13 @@ The format is strict: **60–70 seconds, no fluff, one pattern per episode**. If
 |----|---------|----------|
 | [EP35](https://youtu.be/7uZwcs8GeO0) | **Anthropic Nerfed Claude On Purpose** | — |
 
+
+### Inference & Serving
+
+| EP | Pattern | Key Stat |
+|----|---------|----------|
+| [EP37](https://youtu.be/CvAlR5njyhQ) | **TurboQuant: 6x KV Cache Compression at 1M Tokens #AIEngineering** | — |
+
 ## What's Coming
 
 - **EP28** — MoE Routing (mixture of experts, when to use which expert)
