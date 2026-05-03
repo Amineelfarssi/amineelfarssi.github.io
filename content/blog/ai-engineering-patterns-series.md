@@ -75,6 +75,7 @@ The format is strict: **60–70 seconds, no fluff, one pattern per episode**. If
 
 | EP | Pattern | Key Stat |
 |----|---------|----------|
+| [EP40](https://youtu.be/MTvahdAShtU) | **Your Agent Is Blind** | — |
 | [EP39](https://youtu.be/wOdPXxnLoW0) | **The Future of Agents Isn't Smarter Prompts. It's Smarter Plumbing. #AIEngineering** | — |
 | [EP38](https://youtu.be/bsMVzWGe20A) | **Harness Engineering: How OpenAI Shipped 1M Lines Without Writing Them #AIEngineering** | — |
 | [EP33](https://youtu.be/KLe4K5DQETM) | **Stop Interviewing, Start Acting** | — |
