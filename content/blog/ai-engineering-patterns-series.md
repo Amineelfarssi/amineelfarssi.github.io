@@ -114,6 +114,7 @@ The format is strict: **60–70 seconds, no fluff, one pattern per episode**. If
 
 | EP | Pattern | Key Stat |
 |----|---------|----------|
+| [EP42](https://youtu.be/15a81RlZU9I) | **The Safest AI Agent Might Be Two Agents #AIEngineering** | — |
 | [EP35](https://youtu.be/7uZwcs8GeO0) | **Anthropic Nerfed Claude On Purpose** | — |
 
 
